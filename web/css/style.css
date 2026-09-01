@@ -8,13 +8,17 @@
 }
 
 :root {
-    --background: #0b100d;
-    --panel: #151d18;
-    --panel-light: #1d2821;
-    --text: #f4f7f4;
-    --muted: #9daaa1;
-    --accent: #c7f36b;
-    --accent-dark: #8fb53e;
+    --background: #0b100d;
+    --panel: #151d18;
+    --panel-light: #1d2821;
+    --text: #f4f7f4;
+    --muted: #9daaa1;
+    --accent: #c7f36b;
+    --accent-dark: #8fb53e;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
