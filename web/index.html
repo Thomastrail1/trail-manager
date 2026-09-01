@@ -278,7 +278,7 @@
 
         </div>
 
-    <button class="primary-button create-button" type="button" onclick="document.getElementById('createScreen').classList.remove('active'); document.getElementById('careerScreen').classList.add('active'); window.scrollTo(0,0);">
+    <button class="primary-button create-button" type="button" onclick="document.querySelectorAll('.screen').forEach(function(s){s.style.display='none';});document.getElementById('careerScreen').style.display='block';">
         Commencer ma carrière
 
           <span>→</span>
