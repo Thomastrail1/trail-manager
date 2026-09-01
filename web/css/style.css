@@ -2,11 +2,6 @@
    TRAIL MANAGER
    Main stylesheet
    ========================================= */
-
-* {
-    box-sizing: border-box;
-}
-
 :root {
     --background: #0b100d;
     --panel: #151d18;
@@ -16,10 +11,13 @@
     --accent: #c7f36b;
     --accent-dark: #8fb53e;
 }
-
 * {
-    box-sizing: border-box;
+    box-sizing: border-box;
 }
+
+
+
+
 
 body {
     margin: 0;
