@@ -21,7 +21,6 @@ const winsValue = document.getElementById("winsValue");
 const raceResult = document.getElementById("raceResult");
 
 let selectedProfile = null;
-
 let runner = null;
 
 try {
@@ -32,8 +31,7 @@ localStorage.getItem("trailManagerRunner")
 runner = null;
 }
 
-
-const profileNames = {
+const names = {
 grimpeur: "Grimpeur",
 rouleur: "Rouleur",
 descendeur: "Descendeur",
@@ -41,160 +39,209 @@ ultra: "Ultra",
 polyvalent: "Polyvalent"
 };
 
+const profileStats = {
+grimpeur: {
+endurance: 55,
+climb: 80,
+descent: 40,
+speed: 50,
+management: 55,
+fitness: 60
+},
 
-// =========================
-// AFFICHER UN ÉCRAN
-// =========================
+rouleur: {
+endurance: 55,
+climb: 45,
+descent: 55,
+speed: 80,
+management: 60,
+fitness: 60
+},
 
-function showScreen(screenId) {
+descendeur: {
+endurance: 50,
+climb: 40,
+descent: 85,
+speed: 70,
+management: 50,
+fitness: 60
+},
 
-screens.forEach((screen) => {
+ultra: {
+endurance: 85,
+climb: 60,
+descent: 40,
+speed: 40,
+management: 85,
+fitness: 60
+},
 
-if (screen.id === screenId) {
-screen.classList.add("active");
-} else {
-screen.classList.remove("active");
+polyvalent: {
+endurance: 60,
+climb: 60,
+descent: 60,
+speed: 60,
+management: 60,
+fitness: 60
 }
+};
 
+function show(id) {
+screens.forEach(screen => {
+screen.classList.toggle(
+"active",
+screen.id === id
+);
 });
 
-
-navItems.forEach((item) => {
-
-if (item.dataset.screen === screenId) {
-item.classList.add("active");
-} else {
-item.classList.remove("active");
-}
-
+navItems.forEach(item => {
+item.classList.toggle(
+"active",
+item.dataset.screen === id
+);
 });
 
 window.scrollTo(0, 0);
 }
 
+function renderRunner() {
+if (!runner) return;
 
-// =========================
-// ACCUEIL
-// =========================
+careerName.textContent = runner.name;
 
-const startButton =
-document.getElementById("startButton");
+careerProfile.textContent =
+names[runner.profile] || "Polyvalent";
 
-if (startButton) {
+careerLevel.textContent =
+runner.level;
 
-startButton.onclick = function () {
-showScreen("createScreen");
-};
+xpBar.style.width =
+Math.min(100, runner.xp) + "%";
 
+xpText.textContent =
+`${runner.xp} / 100 XP`;
+
+energyValue.textContent =
+runner.energy;
+
+moneyValue.textContent =
+`${runner.money} €`;
+
+racesValue.textContent =
+runner.races;
+
+winsValue.textContent =
+runner.victories;
 }
 
+function renderRunnerStats() {
+if (!runner || !runner.stats) return;
 
-// =========================
-// RETOUR
-// =========================
+const stats = runner.stats;
 
-const backButton =
-document.getElementById("backButton");
-
-if (backButton) {
-
-backButton.onclick = function () {
-showScreen("homeScreen");
+const map = {
+Endurance: stats.endurance,
+Climb: stats.climb,
+Descent: stats.descent,
+Speed: stats.speed,
+Management: stats.management,
+Fitness: stats.fitness
 };
 
+Object.entries(map).forEach(
+([name, value]) => {
+
+const valueElement =
+document.getElementById(
+`stat${name}Value`
+);
+
+const barElement =
+document.getElementById(
+`stat${name}Bar`
+);
+
+if (valueElement) {
+valueElement.textContent = value;
 }
 
+if (barElement) {
+barElement.style.width =
+value + "%";
+}
+}
+);
+}
 
-const raceBackButton =
-document.getElementById("raceBackButton");
-
-if (raceBackButton) {
-
-raceBackButton.onclick = function () {
-showScreen("careerScreen");
+document.getElementById(
+"startButton"
+).onclick = () => {
+show("createScreen");
 };
 
-}
+document.getElementById(
+"backButton"
+).onclick = () => {
+show("homeScreen");
+};
 
+document.getElementById(
+"raceBackButton"
+).onclick = () => {
+show("careerScreen");
+};
 
-// =========================
-// NOM DU RUNNER
-// =========================
+document.getElementById(
+"raceButton"
+).onclick = () => {
+show("raceScreen");
+};
 
-if (runnerName) {
+runnerName.oninput = () => {
 
-runnerName.oninput = function () {
-
-const name =
-runnerName.value.trim();
-
-if (previewName) {
 previewName.textContent =
-name || "Ton prénom";
-}
-
+runnerName.value.trim() ||
+"Ton prénom";
 };
 
-}
+profileCards.forEach(card => {
 
+card.onclick = () => {
 
-// =========================
-// PROFILS
-// =========================
-
-profileCards.forEach((card) => {
-
-card.onclick = function () {
-
-profileCards.forEach((item) => {
-item.classList.remove("selected");
+profileCards.forEach(c => {
+c.classList.remove("selected");
 });
 
 card.classList.add("selected");
 
 selectedProfile =
 card.dataset.profile;
-
 };
-
 });
 
-
-// =========================
-// CREER LE RUNNER
-// =========================
-
-if (createButton) {
-
-createButton.onclick = function () {
+createButton.onclick = () => {
 
 const name =
-runnerName
-? runnerName.value.trim()
-: "";
+runnerName.value.trim();
 
 if (name.length < 2) {
 
-if (runnerName) {
 runnerName.focus();
-}
+
+runnerName.style.borderColor =
+"#b7f04d";
 
 return;
 }
-
 
 if (!selectedProfile) {
 
-alert(
-"Choisis un profil pour ton runner."
-);
+profileCards[0].focus();
 
 return;
 }
 
-
 runner = {
-
 name: name,
 
 profile: selectedProfile,
@@ -209,234 +256,80 @@ victories: 0,
 
 money: 500,
 
-energy: 100
+energy: 100,
 
+stats: {
+...profileStats[selectedProfile]
+}
 };
-
 
 localStorage.setItem(
 "trailManagerRunner",
 JSON.stringify(runner)
 );
 
+renderRunner();
 
-updateCareer();
+renderRunnerStats();
 
-
-showScreen("careerScreen");
-
+show("careerScreen");
 };
 
-}
-
-
-// =========================
-// AFFICHER LA CARRIERE
-// =========================
-
-function updateCareer() {
-
-if (!runner) {
-return;
-}
-
-
-if (careerName) {
-careerName.textContent =
-runner.name;
-}
-
-
-if (careerProfile) {
-careerProfile.textContent =
-profileNames[runner.profile]
-|| "Polyvalent";
-}
-
-
-if (careerLevel) {
-careerLevel.textContent =
-runner.level;
-}
-
-
-if (xpBar) {
-
-xpBar.style.width =
-Math.min(
-100,
-runner.xp
-) + "%";
-
-}
-
-
-if (xpText) {
-
-xpText.textContent =
-runner.xp +
-" / 100 XP";
-
-}
-
-
-if (energyValue) {
-energyValue.textContent =
-runner.energy;
-}
-
-
-if (moneyValue) {
-
-moneyValue.textContent =
-runner.money + " €";
-
-}
-
-
-if (racesValue) {
-
-racesValue.textContent =
-runner.races;
-
-}
-
-
-if (winsValue) {
-
-winsValue.textContent =
-runner.victories;
-
-}
-
-}
-
-
-// =========================
-// VOIR LA COURSE
-// =========================
-
-const raceButton =
-document.getElementById("raceButton");
-
-if (raceButton) {
-
-raceButton.onclick = function () {
-
-showScreen("raceScreen");
-
-};
-
-}
-
-
-// =========================
-// STRATEGIES
-// =========================
-
-const strategyCards =
 document.querySelectorAll(
 ".strategy-card"
-);
+).forEach(card => {
 
+card.onclick = () => {
 
-strategyCards.forEach((card) => {
-
-card.onclick = function () {
-
-strategyCards.forEach((item) => {
-
-item.classList.remove(
-"selected"
-);
-
+document.querySelectorAll(
+".strategy-card"
+).forEach(c => {
+c.classList.remove("selected");
 });
 
-
-card.classList.add(
-"selected"
-);
-
+card.classList.add("selected");
 };
-
 });
 
-
-// =========================
-// LANCER LA COURSE
-// =========================
-
-const startRaceButton =
 document.getElementById(
 "startRaceButton"
-);
+).onclick = () => {
 
-
-if (startRaceButton) {
-
-startRaceButton.onclick = function () {
-
-if (!runner) {
-
-showScreen(
-"createScreen"
-);
-
-return;
-}
-
+if (!runner) return;
 
 const selectedStrategy =
 document.querySelector(
 ".strategy-card.selected"
 );
 
-
 const strategy =
-selectedStrategy
-? selectedStrategy.dataset.strategy
-: "prudent";
+selectedStrategy?.dataset.strategy ||
+"prudent";
 
-
-const energyCost = {
-
+const costs = {
 prudent: 20,
-
 regulier: 30,
-
 attaque: 45
-
 };
-
 
 const xpGain = {
-
 prudent: 25,
-
 regulier: 35,
-
 attaque: 45
-
 };
 
-
-runner.energy =
-Math.max(
+runner.energy = Math.max(
 0,
 runner.energy -
-energyCost[strategy]
+costs[strategy]
 );
-
 
 runner.xp +=
 xpGain[strategy];
 
-
 runner.races += 1;
 
-
-let levelMessage = "";
-
+let levelUp = "";
 
 if (runner.xp >= 100) {
 
@@ -446,102 +339,90 @@ runner.level += 1;
 
 runner.money += 150;
 
-levelMessage =
-"<br><br><strong>" +
-"Niveau supérieur !" +
-"</strong>";
-
+levelUp =
+`<br><br>
+<strong>Niveau supérieur !</strong>
+<br>
+Tu passes niveau ${runner.level}.
+`;
 }
 
-
-let resultText = "";
-
+let result = "";
 
 if (strategy === "attaque") {
 
-resultText =
-"Tu as attaqué fort dès le départ. " +
-"La performance est bonne, mais tu termines très fatigué.";
+result =
+"Tu as pris des risques et signé une belle performance.";
 
 } else if (strategy === "regulier") {
 
-resultText =
-"Course solide et régulière. " +
-"Tu as bien géré ton effort.";
+result =
+"Course solide et régulière. Tu progresses sans te mettre dans le rouge.";
 
 } else {
 
-resultText =
-"Course maîtrisée. " +
-"Tu termines avec encore des réserves.";
-
+result =
+"Course maîtrisée. Tu termines avec encore des réserves.";
 }
-
 
 localStorage.setItem(
 "trailManagerRunner",
 JSON.stringify(runner)
 );
 
+renderRunner();
 
-updateCareer();
-
-
-if (raceResult) {
+renderRunnerStats();
 
 raceResult.innerHTML =
-"<strong>🏁 Course terminée</strong><br><br>" +
-resultText +
-levelMessage;
+`<strong>🏁 Course terminée</strong>
+<br><br>
+${result}
+${levelUp}`;
 
 raceResult.classList.remove(
 "hidden"
 );
-
-}
-
 };
 
-}
+navItems.forEach(item => {
 
-
-// =========================
-// NAVIGATION
-// =========================
-
-navItems.forEach((item) => {
-
-item.onclick = function () {
+item.onclick = () => {
 
 const target =
 item.dataset.screen;
-
 
 if (
 target === "careerScreen" &&
 !runner
 ) {
-
-showScreen(
-"createScreen"
-);
-
+show("createScreen");
 return;
-
 }
 
-
-showScreen(target);
-
+show(target);
 };
-
 });
 
+if (runner) {
 
-// =========================
-// INITIALISATION
-// =========================
+if (!runner.stats) {
 
-updateCareer();
+runner.stats = {
+...profileStats[
+runner.profile
+] || profileStats.polyvalent
+};
+
+localStorage.setItem(
+"trailManagerRunner",
+JSON.stringify(runner)
+);
+}
+
+renderRunner();
+
+renderRunnerStats();
+}
 
 });
