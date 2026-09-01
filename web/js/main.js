@@ -1,14 +1,27 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
+
+// =========================
+// ÉCRANS
+// =========================
+
 const homeScreen = document.getElementById("homeScreen");
 const createScreen = document.getElementById("createScreen");
 const careerScreen = document.getElementById("careerScreen");
 
+// =========================
+// BOUTONS
+// =========================
+
 const startButton = document.getElementById("startButton");
 const backButton = document.getElementById("backButton");
+const createRunnerButton = document.getElementById("createRunnerButton");
+
+// =========================
+// FORMULAIRE
+// =========================
 
 const runnerName = document.getElementById("runnerName");
 const previewName = document.getElementById("previewName");
-const createRunnerButton = document.getElementById("createRunnerButton");
 
 const careerName = document.getElementById("careerName");
 const careerProfile = document.getElementById("careerProfile");
@@ -16,7 +29,7 @@ const careerProfile = document.getElementById("careerProfile");
 const profileCards = document.querySelectorAll(".profile-card");
 const navItems = document.querySelectorAll(".nav-item");
 
-let selectedProfile = null;
+let selectedProfile = "";
 
 const profileNames = {
 grimpeur: "Grimpeur",
@@ -27,109 +40,144 @@ polyvalent: "Polyvalent"
 };
 
 
-/* =========================
-CHANGER D'ÉCRAN
-========================== */
+// =========================
+// CHANGER D'ÉCRAN
+// =========================
 
 function showScreen(screen) {
-document.querySelectorAll(".screen").forEach((item) => {
+
+if (!screen) return;
+
+document.querySelectorAll(".screen").forEach(function (item) {
 item.classList.remove("active");
 });
 
 screen.classList.add("active");
 
-navItems.forEach((item) => {
+document.querySelectorAll(".nav-item").forEach(function (item) {
 item.classList.remove("active");
 });
 
-const matchingNav = document.querySelector(
-`.nav-item[data-screen="${screen.id}"]`
+const navButton = document.querySelector(
+'.nav-item[data-screen="' + screen.id + '"]'
 );
 
-if (matchingNav) {
-matchingNav.classList.add("active");
+if (navButton) {
+navButton.classList.add("active");
 }
 
-window.scrollTo({
-top: 0,
-behavior: "instant"
-});
+window.scrollTo(0, 0);
 }
 
 
-/* =========================
-ACCUEIL → CRÉATION
-========================== */
+// =========================
+// ACCUEIL → CRÉATION
+// =========================
 
-startButton.addEventListener("click", () => {
+if (startButton) {
+startButton.addEventListener("click", function () {
 showScreen(createScreen);
+
+if (runnerName) {
+setTimeout(function () {
 runnerName.focus();
+}, 100);
+}
 });
+}
 
 
-/* =========================
-RETOUR ACCUEIL
-========================== */
+// =========================
+// RETOUR
+// =========================
 
-backButton.addEventListener("click", () => {
+if (backButton) {
+backButton.addEventListener("click", function () {
 showScreen(homeScreen);
 });
+}
 
 
-/* =========================
-NOM DU RUNNER
-========================== */
+// =========================
+// NOM DU RUNNER
+// =========================
 
-runnerName.addEventListener("input", () => {
+if (runnerName) {
+
+runnerName.addEventListener("input", function () {
+
 const name = runnerName.value.trim();
 
+if (previewName) {
 previewName.textContent = name || "Ton prénom";
+}
 
 updateCreateButton();
 });
+}
 
 
-/* =========================
-CHOIX DU PROFIL
-========================== */
+// =========================
+// CHOIX DU PROFIL
+// =========================
 
-profileCards.forEach((card) => {
-card.addEventListener("click", () => {
+profileCards.forEach(function (card) {
 
-profileCards.forEach((item) => {
+card.addEventListener("click", function () {
+
+profileCards.forEach(function (item) {
 item.classList.remove("selected");
 });
 
 card.classList.add("selected");
 
-selectedProfile = card.dataset.profile;
+selectedProfile = card.getAttribute("data-profile") || "";
 
 updateCreateButton();
 });
 });
 
 
-/* =========================
-VALIDATION
-========================== */
+// =========================
+// BOUTON CRÉER
+// =========================
 
 function updateCreateButton() {
-const validName = runnerName.value.trim().length >= 2;
-const validProfile = selectedProfile !== null;
+
+if (!createRunnerButton) return;
+
+const name =
+runnerName ? runnerName.value.trim() : "";
+
+const validName = name.length >= 2;
+const validProfile = selectedProfile !== "";
 
 createRunnerButton.disabled = !(validName && validProfile);
+
+if (validName && validProfile) {
+createRunnerButton.classList.add("ready");
+} else {
+createRunnerButton.classList.remove("ready");
+}
 }
 
 
-/* =========================
-CRÉER LE RUNNER
-========================== */
+// =========================
+// CRÉATION DU RUNNER
+// =========================
 
-createRunnerButton.addEventListener("click", () => {
+if (createRunnerButton) {
 
-const name = runnerName.value.trim();
+createRunnerButton.addEventListener("click", function () {
 
-if (name.length < 2 || !selectedProfile) {
+const name =
+runnerName ? runnerName.value.trim() : "";
+
+if (name.length < 2) {
+return;
+}
+
+if (!selectedProfile) {
 return;
 }
 
@@ -137,9 +185,11 @@ const runner = {
 name: name,
 profile: selectedProfile,
 level: 1,
+xp: 0,
 races: 0,
 victories: 0,
-xp: 0
+money: 500,
+energy: 100
 };
 
 localStorage.setItem(
@@ -147,42 +197,45 @@ localStorage.setItem(
 JSON.stringify(runner)
 );
 
+if (careerName) {
 careerName.textContent = runner.name;
+}
 
+if (careerProfile) {
 careerProfile.textContent =
 profileNames[runner.profile] || "Polyvalent";
+}
 
 showScreen(careerScreen);
 });
-
-
-/* =========================
-NAVIGATION
-========================== */
-
-navItems.forEach((item) => {
-
-item.addEventListener("click", () => {
-
-const targetId = item.dataset.screen;
-
-if (!targetId) {
-return;
 }
 
-const targetScreen = document.getElementById(targetId);
+
+// =========================
+// NAVIGATION BASSE
+// =========================
+
+navItems.forEach(function (item) {
+
+item.addEventListener("click", function () {
+
+const targetId = item.getAttribute("data-screen");
+
+if (!targetId) return;
+
+const targetScreen =
+document.getElementById(targetId);
 
 if (targetScreen) {
 showScreen(targetScreen);
 }
 });
-
 });
 
 
-/* =========================
-CHARGER UNE CARRIÈRE
-========================== */
+// =========================
+// CHARGER LE RUNNER SAUVEGARDÉ
+// =========================
 
 function loadRunner() {
 
@@ -197,28 +250,27 @@ try {
 
 const runner = JSON.parse(savedRunner);
 
+if (careerName) {
 careerName.textContent =
 runner.name || "Runner";
+}
 
+if (careerProfile) {
 careerProfile.textContent =
 profileNames[runner.profile] || "Polyvalent";
+}
 
 } catch (error) {
 
-console.warn(
-"Impossible de charger le runner sauvegardé."
-);
+localStorage.removeItem("trailManagerRunner");
 
-localStorage.removeItem(
-"trailManagerRunner"
-);
 }
 }
 
 
-/* =========================
-INITIALISATION
-========================== */
+// =========================
+// INITIALISATION
+// =========================
 
 loadRunner();
 updateCreateButton();
