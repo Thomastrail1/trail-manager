@@ -1,24 +1,18 @@
-/* =========================================================
-TRAIL MANAGER — INTERFACE
-========================================================= */
-
 * {
 box-sizing: border-box;
-margin: 0;
-padding: 0;
 }
 
-html {
+html,
+body {
+margin: 0;
 min-height: 100%;
-background: #080d0b;
+font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+background: #07110d;
+color: #f4f7f2;
 }
 
 body {
 min-height: 100vh;
-background-color: #080d0b !important;
-color: #f2f5f1;
-font-family: Arial, Helvetica, sans-serif;
-overflow-x: hidden;
 }
 
 button,
@@ -27,872 +21,591 @@ font: inherit;
 }
 
 button {
-border: 0;
 cursor: pointer;
 }
 
-button:disabled {
-cursor: not-allowed;
-}
-
-
-/* =========================================================
-APPLICATION
-========================================================= */
-
-.app {
-position: relative;
-width: 100%;
-max-width: 520px;
+main {
 min-height: 100vh;
-margin: 0 auto;
-overflow: hidden;
-background:
-radial-gradient(
-circle at 50% 18%,
-rgba(91, 126, 72, 0.18),
-transparent 34%
-),
-linear-gradient(
-180deg,
-#101b17 0%,
-#0a110e 55%,
-#070b09 100%
-);
+padding-bottom: 82px;
 }
-
-
-/* =========================================================
-ÉCRANS
-========================================================= */
 
 .screen {
-position: relative;
 display: none;
 min-height: 100vh;
-padding: 24px 20px 110px;
+position: relative;
+overflow: hidden;
 }
 
 .screen.active {
 display: block;
 }
 
-
-/* =========================================================
+/* =========================
 HEADER
-========================================================= */
+========================= */
 
-.topbar,
-.page-header {
+.topbar {
 position: relative;
-z-index: 20;
+z-index: 3;
 display: flex;
-align-items: center;
 justify-content: space-between;
+align-items: flex-start;
+padding: 24px 20px 10px;
 }
 
-.topbar h1,
-.page-header h2 {
-margin-top: 4px;
-color: #ffffff;
-font-size: 25px;
-font-weight: 800;
-letter-spacing: -0.7px;
-}
-
-.eyebrow {
-display: block;
-color: #8e9c95;
-font-size: 10px;
-font-weight: 800;
-letter-spacing: 1.8px;
-text-transform: uppercase;
-}
-
-.eyebrow.accent {
-color: #b8e45c;
-}
-
-.profile-icon {
-display: flex;
+.topbar.simple {
 align-items: center;
-justify-content: center;
-width: 43px;
-height: 43px;
-border: 1px solid rgba(184, 228, 92, 0.28);
-border-radius: 50%;
-background: rgba(184, 228, 92, 0.09);
-color: #b8e45c;
-font-size: 12px;
+}
+
+.topbar small,
+.eyebrow,
+.section-title span,
+.career-level span,
+.stats-grid span,
+.race-stats span {
+font-size: 10px;
+letter-spacing: 1.8px;
+font-weight: 800;
+color: #a8c2b1;
+}
+
+.topbar h1 {
+font-size: 31px;
+line-height: 1.04;
+margin: 12px 0 0;
+letter-spacing: -1.5px;
+}
+
+.topbar h2 {
+margin: 4px 0 0;
+font-size: 25px;
+}
+
+.topbar p {
+margin: 5px 0 0;
+color: #9db1a4;
+}
+
+.logo,
+.runner-avatar {
+display: grid;
+place-items: center;
+border: 1px solid #9bdc39;
+color: #b7f04d;
 font-weight: 900;
+background: #0b1812;
 }
 
-
-/* =========================================================
-MONTAGNE
-========================================================= */
-
-.mountain-scene {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 500px;
-overflow: hidden;
-pointer-events: none;
-
-background:
-radial-gradient(
-ellipse at 50% 40%,
-rgba(142, 189, 89, 0.12),
-transparent 38%
-),
-linear-gradient(
-180deg,
-#17241f 0%,
-#101a16 55%,
-#0b120f 100%
-);
+.logo {
+width: 42px;
+height: 42px;
+border-radius: 12px;
 }
 
-.mountain-scene::after {
-content: "";
+.runner-avatar {
+width: 68px;
+height: 68px;
+border-radius: 20px;
+font-size: 22px;
+}
+
+/* =========================
+ACCUEIL
+========================= */
+
+.mountains {
 position: absolute;
 inset: 0;
-background:
-linear-gradient(
-180deg,
-transparent 55%,
-#0a100d 100%
+overflow: hidden;
+background: radial-gradient(
+circle at 70% 20%,
+#193629 0,
+#0b1711 38%,
+#07110d 72%
 );
 }
 
 .stars {
 position: absolute;
 inset: 0;
-opacity: 0.7;
-
-background-image:
-radial-gradient(circle at 15% 18%, #ffffff 0 1px, transparent 1.5px),
-radial-gradient(circle at 28% 11%, #ffffff 0 1px, transparent 1.5px),
-radial-gradient(circle at 43% 22%, #ffffff 0 1px, transparent 1.5px),
-radial-gradient(circle at 67% 13%, #ffffff 0 1px, transparent 1.5px),
-radial-gradient(circle at 79% 27%, #ffffff 0 1px, transparent 1.5px),
-radial-gradient(circle at 91% 16%, #ffffff 0 1px, transparent 1.5px),
-radial-gradient(circle at 54% 8%, #ffffff 0 1px, transparent 1.5px);
+background-image: radial-gradient(
+#d7eadb 1px,
+transparent 1px
+);
+background-size: 43px 43px;
+opacity: 0.25;
 }
 
 .mountain {
 position: absolute;
-bottom: -10px;
+bottom: 0;
 left: -10%;
 width: 120%;
-height: 280px;
+height: 58%;
 clip-path: polygon(
 0 100%,
-0 70%,
-10% 61%,
-18% 72%,
-30% 43%,
-39% 60%,
-51% 24%,
-61% 53%,
-72% 35%,
-82% 64%,
-92% 46%,
-100% 65%,
+0 66%,
+16% 46%,
+27% 66%,
+42% 25%,
+53% 53%,
+68% 35%,
+81% 63%,
+100% 43%,
 100% 100%
 );
 }
 
-.mountain-back {
-height: 270px;
-background: #26382f;
-opacity: 0.7;
+.mountain.back {
+background: #10231a;
+transform: translateY(5%);
 }
 
-.mountain-middle {
-height: 220px;
-bottom: -20px;
-left: -15%;
-background: #18261f;
+.mountain.front {
+height: 47%;
+background: #09150f;
 clip-path: polygon(
 0 100%,
-0 70%,
-12% 56%,
-23% 69%,
-36% 39%,
-45% 60%,
-57% 30%,
-66% 58%,
-78% 42%,
-88% 67%,
-100% 51%,
-100% 100%
-);
-}
-
-.mountain-front {
-height: 180px;
-bottom: -20px;
-left: -15%;
-background: #0c1511;
-clip-path: polygon(
-0 100%,
-0 76%,
-14% 63%,
-28% 75%,
-42% 47%,
-52% 68%,
-65% 38%,
-75% 64%,
-88% 48%,
+0 72%,
+14% 57%,
+25% 73%,
+39% 40%,
+52% 69%,
+65% 50%,
+78% 72%,
+91% 55%,
 100% 68%,
 100% 100%
 );
 }
 
-.ridge-line {
-position: absolute;
-z-index: 4;
-left: 22%;
-bottom: 150px;
-width: 58%;
-height: 2px;
-transform: rotate(-8deg);
-background: #b8e45c;
-opacity: 0.65;
-filter: drop-shadow(0 0 8px rgba(184, 228, 92, 0.5));
-}
-
-
-/* =========================================================
-ACCUEIL
-========================================================= */
-
-.home-content {
+.hero {
 position: relative;
-z-index: 10;
-padding-top: 285px;
+z-index: 2;
+padding: 46vh 20px 0;
+max-width: 620px;
 }
 
-.home-content h2 {
-margin-top: 10px;
-color: #ffffff;
-font-size: clamp(35px, 9vw, 47px);
-line-height: 0.98;
-font-weight: 900;
-letter-spacing: -2px;
-}
-
-.home-content h2 span {
-color: #b8e45c;
-}
-
-.hero-text {
+.hero p {
+color: #b4c3b8;
+line-height: 1.55;
 max-width: 420px;
-margin-top: 18px;
-color: #9aa69f;
-font-size: 15px;
-line-height: 1.6;
 }
-
-
-/* =========================================================
-BOUTONS
-========================================================= */
 
 .primary-button {
-display: flex;
-align-items: center;
-justify-content: space-between;
 width: 100%;
-min-height: 58px;
-margin-top: 25px;
-padding: 0 20px 0 22px;
+border: 0;
 border-radius: 15px;
-
-background: #b8e45c;
-color: #0b110d;
-
-font-size: 15px;
+padding: 17px 20px;
+background: #b7f04d;
+color: #08110b;
 font-weight: 900;
-text-transform: uppercase;
-letter-spacing: 0.3px;
-
-box-shadow:
-0 10px 30px rgba(0, 0, 0, 0.28),
-0 0 25px rgba(184, 228, 92, 0.08);
-
-transition:
-transform 0.18s ease,
-background 0.18s ease;
-}
-
-.primary-button span {
-font-size: 24px;
+box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+display: flex;
+justify-content: center;
+gap: 12px;
+align-items: center;
 }
 
 .primary-button:hover {
-transform: translateY(-2px);
-background: #c8f36e;
+filter: brightness(1.05);
 }
 
-.primary-button:active {
-transform: translateY(1px);
+.primary-button span {
+font-size: 20px;
 }
 
-.primary-button:disabled {
-background: #344039;
-color: #78847d;
-box-shadow: none;
-}
-
-
-/* =========================================================
-STATS ACCUEIL
-========================================================= */
-
-.stats-preview {
+.home-stats {
 position: relative;
-z-index: 10;
+z-index: 2;
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 gap: 10px;
-margin-top: 28px;
+margin: 26px 20px 0;
 }
 
-.stat-card {
-min-height: 86px;
-padding: 16px 10px;
-border: 1px solid rgba(255, 255, 255, 0.07);
+.home-stats div,
+.stats-grid div,
+.race-stats div {
+background: #0d1c15;
+border: 1px solid #1c3328;
 border-radius: 15px;
-background: rgba(22, 31, 26, 0.78);
-text-align: center;
-backdrop-filter: blur(10px);
+padding: 14px;
 }
 
-.stat-card strong {
+.home-stats strong {
 display: block;
-color: #ffffff;
-font-size: 22px;
-font-weight: 900;
+font-size: 20px;
 }
 
-.stat-card span {
+.home-stats span {
 display: block;
-margin-top: 5px;
-color: #84918a;
-font-size: 9px;
-font-weight: 800;
-letter-spacing: 0.8px;
-text-transform: uppercase;
+color: #829a8b;
+font-size: 11px;
+margin-top: 4px;
 }
 
+/* =========================
+PAGES
+========================= */
 
-/* =========================================================
-CRÉATION DU RUNNER
-========================================================= */
-
-.page-header {
-justify-content: flex-start;
-gap: 14px;
+.page-content {
+padding: 18px 20px 30px;
+max-width: 700px;
+margin: auto;
 }
 
 .icon-button {
-display: flex;
-align-items: center;
-justify-content: center;
-flex: 0 0 auto;
-width: 43px;
-height: 43px;
-border: 1px solid rgba(255, 255, 255, 0.1);
-border-radius: 13px;
-background: #151f1a;
-color: #ffffff;
-font-size: 22px;
-}
-
-.create-content {
-margin-top: 28px;
+border: 1px solid #294336;
+background: #0d1c15;
+color: #fff;
+width: 42px;
+height: 42px;
+border-radius: 12px;
 }
 
 .runner-preview {
 display: flex;
+gap: 15px;
 align-items: center;
-gap: 17px;
-min-height: 120px;
-padding: 20px;
-border: 1px solid rgba(184, 228, 92, 0.12);
+background: linear-gradient(135deg, #11261b, #0b1711);
+border: 1px solid #20392b;
 border-radius: 20px;
-background:
-linear-gradient(
-135deg,
-rgba(184, 228, 92, 0.09),
-rgba(255, 255, 255, 0.025)
-);
+padding: 18px;
+margin-bottom: 25px;
 }
 
-.preview-label {
+.runner-preview h2 {
+margin: 4px 0;
+}
+
+.runner-preview p {
+margin: 0;
+color: #8ea596;
+}
+
+/* =========================
+FORMULAIRE
+========================= */
+
+.form-label {
 display: block;
-color: #78857e;
-font-size: 9px;
-font-weight: 900;
-letter-spacing: 1.4px;
-text-transform: uppercase;
-}
-
-.runner-preview h3 {
-margin-top: 5px;
-color: #ffffff;
-font-size: 22px;
-}
-
-
-/* =========================================================
-AVATAR RUNNER
-========================================================= */
-
-.runner-avatar,
-.large-runner-avatar {
-position: relative;
-flex: 0 0 auto;
-width: 68px;
-height: 68px;
-overflow: hidden;
-border: 1px solid rgba(184, 228, 92, 0.25);
-border-radius: 50%;
-background:
-radial-gradient(
-circle at 50% 35%,
-#53655b,
-#25352c 70%
-);
-}
-
-.runner-avatar::after,
-.large-runner-avatar::after {
-content: "";
-position: absolute;
-right: 7px;
-bottom: 7px;
-width: 15px;
-height: 15px;
-border: 3px solid #0d1511;
-border-radius: 50%;
-background: #b8e45c;
-}
-
-.runner-head {
-position: absolute;
-z-index: 2;
-top: 13px;
-left: 24px;
-width: 20px;
-height: 20px;
-border-radius: 50%;
-background: #d7c2aa;
-}
-
-.runner-body {
-position: absolute;
-bottom: -2px;
-left: 14px;
-width: 40px;
-height: 42px;
-border-radius: 22px 22px 5px 5px;
-background: #34483d;
-}
-
-.form-group {
-margin-top: 27px;
-}
-
-.form-group label {
-display: block;
-margin-bottom: 10px;
-color: #c7d0ca;
+color: #cbd7cf;
 font-size: 12px;
 font-weight: 800;
-text-transform: uppercase;
-letter-spacing: 0.7px;
+margin-bottom: 8px;
 }
 
-.form-group input {
+.text-input {
 width: 100%;
-height: 54px;
-padding: 0 17px;
+background: #0b1812;
+color: #fff;
+border: 1px solid #294336;
+border-radius: 13px;
+padding: 16px;
 outline: none;
-border: 1px solid rgba(255, 255, 255, 0.1);
-border-radius: 14px;
-background: #121b16;
-color: #ffffff;
-font-size: 15px;
+margin-bottom: 25px;
 }
 
-.form-group input::placeholder {
-color: #5e6963;
+.text-input:focus {
+border-color: #b7f04d;
 }
 
-.form-group input:focus {
-border-color: rgba(184, 228, 92, 0.6);
-box-shadow: 0 0 0 3px rgba(184, 228, 92, 0.08);
+.section-title {
+display: flex;
+justify-content: space-between;
+align-items: end;
+margin: 22px 0 12px;
 }
 
+.section-title small {
+color: #718779;
+}
 
-/* =========================================================
+/* =========================
 PROFILS
-========================================================= */
+========================= */
 
-.section-heading h3 {
-margin-top: 4px;
-color: #ffffff;
-font-size: 17px;
-}
-
-.profile-grid {
+.profiles {
 display: grid;
 grid-template-columns: 1fr 1fr;
 gap: 10px;
-margin-top: 13px;
 }
 
-.profile-card {
-display: flex;
-align-items: center;
-gap: 11px;
-min-height: 82px;
-padding: 13px;
-border: 1px solid rgba(255, 255, 255, 0.07);
-border-radius: 15px;
-background: #121b16;
-color: #ffffff;
+.profile-card,
+.strategy-card {
+border: 1px solid #21392c;
+background: #0c1a13;
+color: #fff;
+border-radius: 16px;
 text-align: left;
-transition:
-border-color 0.18s ease,
-background 0.18s ease,
-transform 0.18s ease;
-}
-
-.profile-card:hover {
-transform: translateY(-1px);
-border-color: rgba(184, 228, 92, 0.35);
-}
-
-.profile-card.selected {
-border-color: #b8e45c;
-background:
-linear-gradient(
-135deg,
-rgba(184, 228, 92, 0.13),
-#121b16
-);
-}
-
-.profile-card-wide {
-grid-column: 1 / -1;
-}
-
-.profile-symbol {
+padding: 16px;
 display: flex;
-align-items: center;
-justify-content: center;
-flex: 0 0 auto;
-width: 38px;
-height: 38px;
-border-radius: 11px;
-background: rgba(184, 228, 92, 0.1);
-color: #b8e45c;
-font-size: 18px;
-font-weight: 900;
+flex-direction: column;
+gap: 7px;
+}
+
+.profile-card b {
+color: #b7f04d;
+font-size: 20px;
 }
 
 .profile-card strong {
-display: block;
-font-size: 12px;
-font-weight: 900;
+font-size: 15px;
 }
 
-.profile-card span {
-display: block;
-margin-top: 4px;
-color: #748078;
-font-size: 9px;
-line-height: 1.35;
+.profile-card span,
+.strategy-card span {
+font-size: 11px;
+color: #83998c;
+line-height: 1.4;
 }
 
+.profile-card.selected,
+.strategy-card.selected {
+border-color: #b7f04d;
+background: #122419;
+box-shadow: 0 0 0 1px #b7f04d inset;
+}
 
-/* =========================================================
-BOUTON CRÉATION
-========================================================= */
+.profile-card.wide {
+grid-column: 1 / -1;
+}
 
 .create-button {
-margin-top: 28px;
+margin-top: 20px;
 }
 
+/* =========================
+CARRIERE
+========================= */
 
-/* =========================================================
-CARRIÈRE
-========================================================= */
-
-.career-content {
-margin-top: 28px;
+.career-level {
+background: #0d1c15;
+border: 1px solid #1d3428;
+border-radius: 18px;
+padding: 17px;
+margin-bottom: 12px;
 }
 
-.career-hero {
+.career-level > div:first-child {
 display: flex;
+justify-content: space-between;
 align-items: center;
-gap: 17px;
-padding: 21px;
-border: 1px solid rgba(255, 255, 255, 0.07);
-border-radius: 20px;
-background:
-linear-gradient(
-135deg,
-rgba(184, 228, 92, 0.09),
-rgba(255, 255, 255, 0.02)
-);
 }
 
-.large-runner-avatar {
-width: 82px;
-height: 82px;
+.career-level strong {
+font-size: 26px;
 }
 
-.large-runner-avatar .runner-head {
-top: 16px;
-left: 29px;
-width: 23px;
-height: 23px;
+.xp {
+height: 7px;
+background: #20362a;
+border-radius: 99px;
+overflow: hidden;
+margin: 10px 0 5px;
 }
 
-.large-runner-avatar .runner-body {
-left: 16px;
-width: 50px;
-height: 49px;
+.xp div {
+height: 100%;
+width: 0;
+background: #b7f04d;
 }
 
-.career-hero h2 {
-margin-top: 5px;
-color: #ffffff;
-font-size: 21px;
+.career-level small {
+color: #7e9787;
 }
 
-.career-hero p {
-margin-top: 5px;
-color: #7f8b84;
-font-size: 11px;
-}
-
-.career-stats {
+.stats-grid,
+.race-stats {
 display: grid;
 grid-template-columns: 1fr 1fr;
 gap: 10px;
-margin-top: 12px;
 }
 
-.career-stat {
-padding: 17px;
-border: 1px solid rgba(255, 255, 255, 0.06);
-border-radius: 15px;
-background: #111a15;
-}
-
-.career-stat span {
-color: #76827b;
-font-size: 10px;
-font-weight: 800;
-text-transform: uppercase;
-letter-spacing: 0.7px;
-}
-
-.career-stat strong {
+.stats-grid strong,
+.race-stats strong {
 display: block;
-margin-top: 7px;
-color: #ffffff;
-font-size: 23px;
-font-weight: 900;
-}
-
-.next-race {
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 15px;
-margin-top: 12px;
-padding: 20px;
-border: 1px solid rgba(184, 228, 92, 0.12);
-border-radius: 18px;
-background: #141e18;
-}
-
-.next-race h3 {
-margin-top: 5px;
-color: #ffffff;
-font-size: 16px;
-}
-
-.next-race p {
-max-width: 210px;
 margin-top: 6px;
-color: #77837c;
-font-size: 10px;
-line-height: 1.5;
+font-size: 18px;
 }
 
-.secondary-button {
-flex: 0 0 auto;
-min-height: 42px;
-padding: 0 13px;
-border: 1px solid rgba(184, 228, 92, 0.28);
-border-radius: 11px;
-background: transparent;
-color: #b8e45c;
-font-size: 10px;
-font-weight: 900;
+/* =========================
+COURSE
+========================= */
+
+.race-card {
+background: linear-gradient(145deg, #11261b, #0a1710);
+border: 1px solid #294536;
+border-radius: 20px;
+padding: 18px;
 }
 
-.secondary-button span {
-margin-left: 4px;
-font-size: 14px;
-}
-
-
-/* =========================================================
-CONTENU À VENIR
-========================================================= */
-
-.coming-section {
-margin-top: 27px;
-}
-
-.coming-grid {
-display: grid;
-gap: 9px;
-margin-top: 11px;
-}
-
-.coming-card {
+.race-top {
 display: flex;
-align-items: center;
 justify-content: space-between;
-min-height: 58px;
-padding: 0 16px;
-border: 1px solid rgba(255, 255, 255, 0.05);
-border-radius: 13px;
-background: #101813;
-}
-
-.coming-card strong {
-color: #dce3df;
+color: #9cb3a3;
 font-size: 12px;
 }
 
-.coming-card span {
-color: #66726b;
+.tag {
+display: inline-block;
+color: #b7f04d;
 font-size: 9px;
+font-weight: 900;
+letter-spacing: 1.3px;
+border: 1px solid #56782d;
+border-radius: 99px;
+padding: 5px 8px;
 }
 
+.race-card h2 {
+margin: 16px 0 8px;
+}
 
-/* =========================================================
-NAVIGATION BASSE
-========================================================= */
+.race-card p,
+.race-hero p {
+color: #8fa698;
+line-height: 1.5;
+}
+
+.race-meta {
+display: flex;
+gap: 18px;
+color: #9fb3a6;
+font-size: 12px;
+margin: 16px 0;
+}
+
+.upcoming {
+display: grid;
+gap: 9px;
+}
+
+.upcoming div {
+display: grid;
+grid-template-columns: 1fr auto;
+gap: 5px;
+padding: 15px;
+background: #0d1c15;
+border: 1px solid #1b3125;
+border-radius: 14px;
+}
+
+.upcoming span {
+color: #748c7e;
+font-size: 11px;
+}
+
+.upcoming b {
+grid-row: 1 / 3;
+grid-column: 2;
+color: #607366;
+font-size: 10px;
+}
+
+.race-hero {
+padding: 20px 0;
+}
+
+.race-hero h1 {
+font-size: 34px;
+margin: 16px 0 8px;
+}
+
+.strategy {
+margin-bottom: 20px;
+}
+
+.strategy-card {
+width: 100%;
+margin-bottom: 9px;
+}
+
+.race-result {
+margin-top: 15px;
+background: #102219;
+border: 1px solid #b7f04d;
+border-radius: 16px;
+padding: 18px;
+line-height: 1.5;
+}
+
+.hidden {
+display: none;
+}
+
+/* =========================
+NAVIGATION
+========================= */
 
 .bottom-nav {
 position: fixed;
-z-index: 100;
+z-index: 10;
 bottom: 0;
-left: 50%;
+left: 0;
+right: 0;
+height: 72px;
 display: grid;
 grid-template-columns: repeat(3, 1fr);
-width: min(520px, 100%);
-min-height: 78px;
-transform: translateX(-50%);
-border-top: 1px solid rgba(255, 255, 255, 0.07);
-background: rgba(8, 13, 11, 0.94);
-backdrop-filter: blur(18px);
+background: rgba(7, 17, 13, 0.95);
+border-top: 1px solid #1b3025;
+backdrop-filter: blur(10px);
+padding-bottom: env(safe-area-inset-bottom);
 }
 
 .nav-item {
+border: 0;
+background: none;
+color: #698174;
+font-size: 18px;
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-gap: 5px;
-background: transparent;
-color: #5e6963;
+gap: 3px;
 }
 
 .nav-item span {
-font-size: 20px;
-line-height: 1;
-}
-
-.nav-item small {
 font-size: 9px;
 font-weight: 800;
-text-transform: uppercase;
 letter-spacing: 0.5px;
 }
 
 .nav-item.active {
-color: #b8e45c;
+color: #b7f04d;
 }
 
+/* =========================
+DESKTOP
+========================= */
 
-/* =========================================================
-PETITS ÉCRANS
-========================================================= */
+@media (min-width: 700px) {
 
-@media (max-width: 380px) {
-
-.screen {
-padding-left: 15px;
-padding-right: 15px;
+.hero {
+padding-top: 36vh;
 }
 
-.home-content h2 {
-font-size: 34px;
+.profiles {
+grid-template-columns: repeat(3, 1fr);
 }
 
-.profile-card {
-padding: 10px;
+.profile-card.wide {
+grid-column: auto;
 }
 
-.profile-symbol {
-width: 34px;
-height: 34px;
-}
-
-.next-race {
-align-items: flex-start;
-flex-direction: column;
-}
-
-.secondary-button {
-width: 100%;
-}
-}
-
-
-/* =========================================================
-ÉCRANS PLUS LARGES
-========================================================= */
-
-@media (min-width: 521px) {
-
-body {
-display: flex;
-justify-content: center;
-}
-
-.app {
-min-height: 100vh;
-box-shadow:
-0 0 80px rgba(0, 0, 0, 0.45);
+.create-button {
+max-width: 500px;
+margin-left: auto;
+margin-right: auto;
 }
 
 .bottom-nav {
-width: 520px;
+left: 50%;
+transform: translateX(-50%);
+max-width: 700px;
+border: 1px solid #1b3025;
+border-bottom: 0;
+border-radius: 18px 18px 0 0;
 }
 }
