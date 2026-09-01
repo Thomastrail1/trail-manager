@@ -1,112 +1,1278 @@
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#07110d;color:#f4f7f2}
+
+html,body{
+margin:0;
+min-height:100%;
+font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+background:#07110d;
+color:#f4f7f2;
+}
+
 body{min-height:100vh}
+
 button,input{font:inherit}
 button{cursor:pointer}
-main{min-height:100vh;padding-bottom:82px}
-.screen{display:none;min-height:100vh;position:relative;overflow:hidden}
-.screen.active{display:block}
 
-.topbar{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:flex-start;padding:24px 20px 10px}
-.topbar.simple{align-items:center}
-.topbar small,.eyebrow,.section-title span,.career-level span,.stats-grid span,.race-stats span{font-size:10px;letter-spacing:1.8px;font-weight:800;color:#a8c2b1}
-.topbar h1{font-size:31px;line-height:1.04;margin:12px 0 0;letter-spacing:-1.5px}
-.topbar h2{margin:4px 0 0;font-size:25px}
-.topbar p{margin:5px 0 0;color:#9db1a4}
+main{
+min-height:100vh;
+padding-bottom:78px;
+}
 
-.logo,.runner-avatar{display:grid;place-items:center;border:1px solid #9bdc39;color:#b7f04d;font-weight:900;background:#0b1812}
-.logo{width:42px;height:42px;border-radius:12px}
-.runner-avatar{width:68px;height:68px;border-radius:20px;font-size:22px}
+.screen{
+display:none;
+min-height:100vh;
+position:relative;
+overflow:hidden;
+}
 
-.mountains{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 70% 20%,#193629 0,#0b1711 38%,#07110d 72%)}
-.stars{position:absolute;inset:0;background-image:radial-gradient(#d7eadb 1px,transparent 1px);background-size:43px 43px;opacity:.25}
-.mountain{position:absolute;bottom:0;left:-10%;width:120%;height:58%;clip-path:polygon(0 100%,0 66%,16% 46%,27% 66%,42% 25%,53% 53%,68% 35%,81% 63%,100% 43%,100% 100%)}
-.mountain.back{background:#10231a;transform:translateY(5%)}
-.mountain.front{height:47%;background:#09150f;clip-path:polygon(0 100%,0 72%,14% 57%,25% 73%,39% 40%,52% 69%,65% 50%,78% 72%,91% 55%,100% 68%,100% 100%)}
+.screen.active{
+display:block;
+}
 
-.hero{position:relative;z-index:2;padding:46vh 20px 0;max-width:620px}
-.hero p{color:#b4c3b8;line-height:1.55;max-width:420px}
 
-.primary-button{width:100%;border:0;border-radius:15px;padding:17px 20px;background:#b7f04d;color:#08110b;font-weight:900;box-shadow:0 12px 28px rgba(0,0,0,.22);display:flex;justify-content:center;gap:12px;align-items:center}
-.primary-button:hover{filter:brightness(1.05)}
-.primary-button span{font-size:20px}
+/* =========================
+ARRIÈRE-PLANS
+========================= */
 
-.home-stats{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:26px 20px 0}
-.home-stats div,.stats-grid div,.race-stats div{background:#0d1c15;border:1px solid #1c3328;border-radius:15px;padding:14px}
-.home-stats strong{display:block;font-size:20px}
-.home-stats span{display:block;color:#829a8b;font-size:11px;margin-top:4px}
+.realistic-background{
+position:absolute;
+inset:0;
+background-size:cover;
+background-position:center;
+z-index:0;
+}
 
-.page-content{padding:18px 20px 30px;max-width:700px;margin:auto}
-.icon-button{border:1px solid #294336;background:#0d1c15;color:#fff;width:42px;height:42px;border-radius:12px}
+.home-background{
+background-image:
+url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=85");
+}
 
-.runner-preview{display:flex;gap:15px;align-items:center;background:linear-gradient(135deg,#11261b,#0b1711);border:1px solid #20392b;border-radius:20px;padding:18px;margin-bottom:25px}
-.runner-preview h2{margin:4px 0}
-.runner-preview p{margin:0;color:#8ea596}
+.runner-background{
+background-image:
+url("https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1600&q=85");
+}
 
-.form-label{display:block;color:#cbd7cf;font-size:12px;font-weight:800;margin-bottom:8px}
-.text-input{width:100%;background:#0b1812;color:#fff;border:1px solid #294336;border-radius:13px;padding:16px;outline:none;margin-bottom:25px}
-.text-input:focus{border-color:#b7f04d}
+.background-overlay{
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+180deg,
+rgba(3,10,7,.48) 0%,
+rgba(3,10,7,.62) 48%,
+rgba(3,10,7,.96) 100%
+);
+}
 
-.section-title{display:flex;justify-content:space-between;align-items:end;margin:22px 0 12px}
-.section-title small{color:#718779}
 
-.profiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.profile-card,.strategy-card{border:1px solid #21392c;background:#0c1a13;color:#fff;border-radius:16px;text-align:left;padding:16px;display:flex;flex-direction:column;gap:7px}
-.profile-card b{color:#b7f04d;font-size:20px}
-.profile-card strong{font-size:15px}
-.profile-card span,.strategy-card span{font-size:11px;color:#83998c;line-height:1.4}
-.profile-card.selected,.strategy-card.selected{border-color:#b7f04d;background:#122419;box-shadow:0 0 0 1px #b7f04d inset}
-.profile-card.wide{grid-column:1/-1}
-.create-button{margin-top:20px}
+/* =========================
+TOPBAR
+========================= */
 
-.career-level{background:#0d1c15;border:1px solid #1d3428;border-radius:18px;padding:17px;margin-bottom:12px}
-.career-level>div:first-child{display:flex;justify-content:space-between;align-items:center}
-.career-level strong{font-size:26px}
-.xp{height:7px;background:#20362a;border-radius:99px;overflow:hidden;margin:10px 0 5px}
-.xp div{height:100%;width:0;background:#b7f04d}
-.career-level small{color:#7e9787}
+.topbar{
+position:relative;
+z-index:3;
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+padding:24px 20px 10px;
+}
 
-.stats-grid,.race-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stats-grid strong,.race-stats strong{display:block;margin-top:6px;font-size:18px}
+.topbar.simple{
+align-items:center;
+}
 
-.race-card{background:linear-gradient(145deg,#11261b,#0a1710);border:1px solid #294536;border-radius:20px;padding:18px}
-.race-top{display:flex;justify-content:space-between;color:#9cb3a3;font-size:12px}
-.tag{display:inline-block;color:#b7f04d;font-size:9px;font-weight:900;letter-spacing:1.3px;border:1px solid #56782d;border-radius:99px;padding:5px 8px}
-.race-card h2{margin:16px 0 8px}
-.race-card p,.race-hero p{color:#8fa698;line-height:1.5}
-.race-meta{display:flex;gap:18px;color:#9fb3a6;font-size:12px;margin:16px 0}
+.topbar small,
+.eyebrow,
+.section-title span,
+.career-level span,
+.stats-grid span,
+.race-stats span{
+font-size:10px;
+letter-spacing:1.8px;
+font-weight:800;
+color:#a8c2b1;
+}
 
-.upcoming{display:grid;gap:9px}
-.upcoming div{display:grid;grid-template-columns:1fr auto;gap:5px;padding:15px;background:#0d1c15;border:1px solid #1b3125;border-radius:14px}
-.upcoming span{color:#748c7e;font-size:11px}
-.upcoming b{grid-row:1/3;grid-column:2;color:#607366;font-size:10px}
+.topbar h1{
+font-size:31px;
+line-height:1.04;
+margin:12px 0 0;
+letter-spacing:-1.5px;
+}
 
-.race-hero{padding:20px 0}
-.race-hero h1{font-size:34px;margin:16px 0 8px}
+.topbar h2{
+margin:4px 0 0;
+font-size:25px;
+}
 
-.strategy{margin-bottom:20px}
-.strategy-card{width:100%;margin-bottom:9px}
+.topbar p{
+margin:5px 0 0;
+color:#9db1a4;
+}
 
-.race-result{margin-top:15px;background:#102219;border:1px solid #b7f04d;border-radius:16px;padding:18px;line-height:1.5}
-.hidden{display:none}
+.logo,
+.runner-avatar{
+display:grid;
+place-items:center;
+border:1px solid #9bdc39;
+color:#b7f04d;
+font-weight:900;
+background:#0b1812;
+}
 
-.bottom-nav{position:fixed;z-index:10;bottom:0;left:0;right:0;height:72px;display:grid;grid-template-columns:repeat(3,1fr);background:rgba(7,17,13,.95);border-top:1px solid #1b3025;backdrop-filter:blur(10px);padding-bottom:env(safe-area-inset-bottom)}
-.nav-item{border:0;background:none;color:#698174;font-size:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
-.nav-item span{font-size:9px;font-weight:800;letter-spacing:.5px}
-.nav-item.active{color:#b7f04d}
+.logo{
+width:42px;
+height:42px;
+border-radius:12px;
+}
 
-.runner-stats{display:grid;gap:10px;margin-bottom:20px}
-.runner-stat{background:#0d1c15;border:1px solid #1c3328;border-radius:15px;padding:14px}
-.runner-stat>div:first-child{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
-.runner-stat strong{font-size:13px}
-.runner-stat>div:first-child span{color:#b7f04d;font-weight:900}
-.stat-bar{height:7px;background:#20362a;border-radius:99px;overflow:hidden}
-.stat-bar div{height:100%;width:0;background:#b7f04d;border-radius:99px}
+.runner-avatar{
+width:68px;
+height:68px;
+border-radius:20px;
+font-size:22px;
+}
+
+
+/* =========================
+ACCUEIL
+========================= */
+
+.home-hero{
+position:relative;
+z-index:2;
+padding:45vh 20px 30px;
+max-width:680px;
+margin:auto;
+}
+
+.hero-copy{
+margin-bottom:25px;
+}
+
+.hero-copy h2{
+font-size:36px;
+line-height:1.03;
+letter-spacing:-1.8px;
+margin:12px 0;
+}
+
+.hero-copy p{
+color:#c0ccc4;
+line-height:1.6;
+max-width:480px;
+}
+
+.primary-button{
+width:100%;
+border:0;
+border-radius:15px;
+padding:17px 20px;
+background:#b7f04d;
+color:#08110b;
+font-weight:900;
+box-shadow:0 12px 28px rgba(0,0,0,.25);
+display:flex;
+justify-content:center;
+gap:12px;
+align-items:center;
+}
+
+.primary-button:hover{
+filter:brightness(1.05);
+}
+
+.primary-button strong{
+font-size:20px;
+}
+
+
+/* =========================
+BOUTONS
+========================= */
+
+.icon-button{
+border:1px solid #294336;
+background:#0d1c15;
+color:#fff;
+width:42px;
+height:42px;
+border-radius:12px;
+}
+
+.runner-level-badge,
+.money-badge{
+background:rgba(7,17,13,.78);
+border:1px solid #304a3b;
+border-radius:13px;
+padding:10px 13px;
+color:#a8b9ae;
+font-size:11px;
+font-weight:800;
+}
+
+.runner-level-badge strong,
+.money-badge strong{
+color:#b7f04d;
+}
+
+
+/* =========================
+CONTENU
+========================= */
+
+.page-content{
+position:relative;
+z-index:2;
+padding:18px 20px 35px;
+max-width:700px;
+margin:auto;
+}
+
+.runner-preview{
+display:flex;
+gap:15px;
+align-items:center;
+background:linear-gradient(135deg,#11261b,#0b1711);
+border:1px solid #20392b;
+border-radius:20px;
+padding:18px;
+margin-bottom:25px;
+}
+
+.runner-preview h2{
+margin:4px 0;
+}
+
+.runner-preview p{
+margin:0;
+color:#8ea596;
+}
+
+.form-label{
+display:block;
+color:#cbd7cf;
+font-size:12px;
+font-weight:800;
+margin-bottom:8px;
+}
+
+.text-input{
+width:100%;
+background:#0b1812;
+color:#fff;
+border:1px solid #294336;
+border-radius:13px;
+padding:16px;
+outline:none;
+margin-bottom:25px;
+}
+
+.text-input:focus{
+border-color:#b7f04d;
+}
+
+.section-title{
+display:flex;
+justify-content:space-between;
+align-items:end;
+margin:24px 0 12px;
+}
+
+.section-title h3{
+margin:5px 0 0;
+font-size:18px;
+}
+
+.section-title small{
+color:#718779;
+}
+
+
+/* =========================
+PROFILS
+========================= */
+
+.profiles{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.profile-card,
+.strategy-card{
+border:1px solid #21392c;
+background:#0c1a13;
+color:#fff;
+border-radius:16px;
+text-align:left;
+padding:16px;
+display:flex;
+flex-direction:column;
+gap:7px;
+}
+
+.profile-card b{
+color:#b7f04d;
+font-size:20px;
+}
+
+.profile-card strong{
+font-size:15px;
+}
+
+.profile-card span,
+.strategy-card span{
+font-size:11px;
+color:#83998c;
+line-height:1.4;
+}
+
+.profile-card.selected,
+.strategy-card.selected{
+border-color:#b7f04d;
+background:#122419;
+box-shadow:0 0 0 1px #b7f04d inset;
+}
+
+.profile-card.wide{
+grid-column:1/-1;
+}
+
+.create-button{
+margin-top:20px;
+}
+
+
+/* =========================
+RUNNER
+========================= */
+
+.runner-page{
+padding-top:10px;
+}
+
+.runner-showcase{
+min-height:380px;
+position:relative;
+overflow:hidden;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+background:
+linear-gradient(
+180deg,
+rgba(7,17,13,.05),
+rgba(7,17,13,.88)
+);
+border-radius:24px;
+border:1px solid rgba(150,190,160,.18);
+margin-bottom:20px;
+}
+
+.runner-figure{
+position:relative;
+width:220px;
+height:330px;
+display:flex;
+justify-content:center;
+align-items:flex-end;
+}
+
+.runner-shadow{
+position:absolute;
+bottom:8px;
+width:150px;
+height:25px;
+border-radius:50%;
+background:rgba(0,0,0,.5);
+filter:blur(8px);
+}
+
+.runner-body{
+position:relative;
+width:130px;
+height:300px;
+transform:translateY(-5px);
+}
+
+.runner-head{
+position:absolute;
+top:0;
+left:47px;
+width:45px;
+height:50px;
+display:grid;
+place-items:center;
+font-size:32px;
+}
+
+.runner-torso{
+position:absolute;
+top:48px;
+left:38px;
+width:62px;
+height:105px;
+border-radius:20px 20px 12px 12px;
+background:linear-gradient(150deg,#d7e0d9,#718478);
+border:2px solid rgba(255,255,255,.18);
+display:grid;
+place-items:center;
+transform:rotate(-4deg);
+}
+
+.runner-torso span{
+font-size:11px;
+font-weight:900;
+color:#142018;
+}
+
+.runner-legs{
+position:absolute;
+top:140px;
+left:42px;
+display:flex;
+gap:7px;
+}
+
+.runner-legs div{
+width:25px;
+height:115px;
+border-radius:14px;
+background:linear-gradient(180deg,#252f2a,#111713);
+}
+
+.runner-legs div:first-child{
+transform:rotate(8deg);
+}
+
+.runner-legs div:last-child{
+transform:rotate(-10deg);
+}
+
+.runner-shoes{
+position:absolute;
+bottom:28px;
+left:30px;
+display:flex;
+gap:34px;
+font-size:25px;
+}
+
+.runner-shoes div:first-child{
+transform:rotate(-8deg);
+}
+
+.runner-shoes div:last-child{
+transform:rotate(10deg);
+}
+
+.runner-pack{
+position:absolute;
+top:60px;
+right:18px;
+font-size:38px;
+}
+
+.runner-info{
+position:absolute;
+left:18px;
+right:18px;
+bottom:18px;
+padding:14px;
+border-radius:15px;
+background:rgba(5,12,8,.72);
+backdrop-filter:blur(8px);
+}
+
+.runner-info h3{
+margin:5px 0;
+}
+
+.runner-info p{
+margin:0;
+color:#91a599;
+font-size:12px;
+line-height:1.45;
+}
+
+
+/* =========================
+STATS
+========================= */
+
+.runner-stats{
+display:grid;
+gap:10px;
+margin-bottom:20px;
+}
+
+.runner-stat{
+background:#0d1c15;
+border:1px solid #1c3328;
+border-radius:15px;
+padding:14px;
+}
+
+.runner-stat>div:first-child{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:9px;
+}
+
+.runner-stat strong{
+font-size:13px;
+}
+
+.runner-stat>div:first-child span{
+color:#b7f04d;
+font-weight:900;
+}
+
+.stat-bar{
+height:7px;
+background:#20362a;
+border-radius:99px;
+overflow:hidden;
+}
+
+.stat-bar div{
+height:100%;
+width:0;
+background:#b7f04d;
+border-radius:99px;
+}
+
+
+/* =========================
+ÉQUIPEMENT
+========================= */
+
+.equipment-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.equipment-slot{
+border:1px solid #21392c;
+background:#0d1c15;
+color:#fff;
+border-radius:16px;
+padding:16px;
+text-align:left;
+display:grid;
+grid-template-columns:42px 1fr;
+gap:2px 10px;
+align-items:center;
+}
+
+.equipment-slot>span{
+grid-row:1/3;
+font-size:27px;
+}
+
+.equipment-slot strong{
+font-size:13px;
+}
+
+.equipment-slot small{
+color:#7e9687;
+}
+
+
+/* =========================
+CARRIÈRE
+========================= */
+
+.career-level{
+background:#0d1c15;
+border:1px solid #1d3428;
+border-radius:18px;
+padding:17px;
+margin-bottom:12px;
+}
+
+.career-level>div:first-child{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.career-level strong{
+font-size:24px;
+}
+
+.xp{
+height:7px;
+background:#20362a;
+border-radius:99px;
+overflow:hidden;
+margin:10px 0 5px;
+}
+
+.xp div{
+height:100%;
+width:0;
+background:#b7f04d;
+}
+
+.career-level small{
+color:#7e9787;
+}
+
+.stats-grid,
+.race-stats{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.stats-grid div,
+.race-stats div{
+background:#0d1c15;
+border:1px solid #1c3328;
+border-radius:15px;
+padding:14px;
+}
+
+.stats-grid strong,
+.race-stats strong{
+display:block;
+margin-top:6px;
+font-size:18px;
+}
+
+
+/* =========================
+COURSE
+========================= */
+
+.race-card{
+background:linear-gradient(145deg,#11261b,#0a1710);
+border:1px solid #294536;
+border-radius:20px;
+padding:18px;
+}
+
+.race-top{
+display:flex;
+justify-content:space-between;
+color:#9cb3a3;
+font-size:12px;
+}
+
+.tag{
+display:inline-block;
+color:#b7f04d;
+font-size:9px;
+font-weight:900;
+letter-spacing:1.3px;
+border:1px solid #56782d;
+border-radius:99px;
+padding:5px 8px;
+}
+
+.race-card h2{
+margin:16px 0 8px;
+}
+
+.race-card p,
+.race-hero p{
+color:#8fa698;
+line-height:1.5;
+}
+
+.race-meta{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+color:#9fb3a6;
+font-size:12px;
+margin:16px 0;
+}
+
+.upcoming{
+display:grid;
+gap:9px;
+}
+
+.upcoming div{
+display:grid;
+grid-template-columns:1fr auto;
+gap:5px;
+padding:15px;
+background:#0d1c15;
+border:1px solid #1b3125;
+border-radius:14px;
+}
+
+.upcoming span{
+color:#748c7e;
+font-size:11px;
+}
+
+.upcoming b{
+grid-row:1/3;
+grid-column:2;
+color:#607366;
+font-size:10px;
+}
+
+.race-hero{
+padding:20px 0;
+}
+
+.race-hero h1{
+font-size:34px;
+margin:16px 0 8px;
+}
+
+.strategy{
+margin-bottom:20px;
+}
+
+.strategy-card{
+width:100%;
+margin-bottom:9px;
+}
+
+.race-result{
+margin-top:15px;
+background:#102219;
+border:1px solid #b7f04d;
+border-radius:16px;
+padding:18px;
+line-height:1.5;
+}
+
+.hidden{
+display:none;
+}
+
+
+/* =========================
+BOUTIQUE
+========================= */
+
+.shop-tabs{
+display:flex;
+gap:8px;
+overflow-x:auto;
+padding-bottom:4px;
+margin-bottom:15px;
+}
+
+.shop-tab{
+flex:0 0 auto;
+border:1px solid #294336;
+background:#0d1c15;
+color:#84998d;
+border-radius:12px;
+padding:10px 14px;
+font-size:11px;
+font-weight:800;
+}
+
+.shop-tab.active{
+color:#07110d;
+background:#b7f04d;
+border-color:#b7f04d;
+}
+
+.shop-grid{
+display:grid;
+gap:12px;
+}
+
+.shop-item{
+display:grid;
+grid-template-columns:90px 1fr;
+gap:14px;
+background:#0d1c15;
+border:1px solid #1d3428;
+border-radius:18px;
+padding:12px;
+}
+
+.shop-item-image{
+min-height:125px;
+display:grid;
+place-items:center;
+background:linear-gradient(145deg,#162a20,#09130e);
+border-radius:13px;
+font-size:40px;
+}
+
+.shop-item-content{
+min-width:0;
+}
+
+.item-rarity{
+font-size:8px;
+font-weight:900;
+letter-spacing:1.2px;
+color:#9aaa9f;
+}
+
+.item-rarity.rare{
+color:#b7f04d;
+}
+
+.shop-item h3{
+margin:5px 0;
+font-size:16px;
+}
+
+.shop-item p{
+margin:0 0 10px;
+color:#81988b;
+font-size:11px;
+line-height:1.4;
+}
+
+.item-stats{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+margin-bottom:12px;
+}
+
+.item-stats span{
+background:#14251c;
+border-radius:7px;
+padding:5px 7px;
+color:#a8baad;
+font-size:9px;
+}
+
+.item-buy{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:8px;
+}
+
+.item-buy strong{
+color:#b7f04d;
+}
+
+.buy-button{
+border:1px solid #b7f04d;
+background:#b7f04d;
+color:#08110b;
+border-radius:9px;
+padding:8px 10px;
+font-size:10px;
+font-weight:900;
+}
+
+
+/* =========================
+COURSE ACTIVE
+========================= */
+
+#activeRaceScreen{
+background:#182b20;
+}
+
+.race-environment{
+position:absolute;
+inset:0;
+overflow:hidden;
+background:#7c9a87;
+}
+
+.race-sky{
+position:absolute;
+inset:0 0 48% 0;
+background:
+linear-gradient(
+180deg,
+#7896a0 0%,
+#a9c0b4 60%,
+#d0d3bd 100%
+);
+}
+
+.race-mountain{
+position:absolute;
+left:-10%;
+width:120%;
+clip-path:polygon(
+0 100%,
+10% 57%,
+23% 74%,
+38% 30%,
+49% 65%,
+63% 42%,
+77% 72%,
+90% 49%,
+100% 67%,
+100% 100%
+);
+}
+
+.mountain-one{
+bottom:28%;
+height:48%;
+background:#455f50;
+}
+
+.mountain-two{
+bottom:25%;
+height:36%;
+background:#314a3c;
+transform:scaleX(-1);
+}
+
+.race-ground{
+position:absolute;
+left:-20%;
+bottom:-10%;
+width:140%;
+height:48%;
+background:
+radial-gradient(
+ellipse at center,
+#6f7c55 0%,
+#536447 42%,
+#354936 100%
+);
+transform:rotate(-2deg);
+}
+
+.race-track{
+position:absolute;
+left:0;
+right:0;
+bottom:23%;
+height:110px;
+transform:rotate(-7deg);
+}
+
+.track-line{
+position:absolute;
+left:-10%;
+right:-10%;
+top:45px;
+height:30px;
+background:#c5b18a;
+border-top:5px solid #dfcba3;
+border-bottom:5px solid #88795c;
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.race-runner{
+position:absolute;
+top:7px;
+left:15%;
+font-size:40px;
+filter:drop-shadow(0 7px 4px rgba(0,0,0,.35));
+transition:left .2s linear;
+z-index:3;
+}
+
+
+/* =========================
+HUD COURSE
+========================= */
+
+.race-hud{
+position:absolute;
+z-index:5;
+top:0;
+left:0;
+right:0;
+padding:20px;
+padding-top:calc(20px + env(safe-area-inset-top));
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+background:linear-gradient(
+180deg,
+rgba(4,12,8,.78),
+rgba(4,12,8,0)
+);
+}
+
+.race-hud small{
+display:block;
+color:#c1d0c6;
+font-size:9px;
+letter-spacing:1.4px;
+font-weight:800;
+}
+
+.race-hud strong{
+display:block;
+margin-top:5px;
+font-size:19px;
+}
+
+.race-time{
+text-align:right;
+}
+
+
+/* =========================
+PROFIL ALTIMÉTRIQUE
+========================= */
+
+.race-profile{
+position:absolute;
+z-index:5;
+left:15px;
+right:15px;
+top:105px;
+padding:10px 12px;
+border-radius:13px;
+background:rgba(5,13,9,.65);
+backdrop-filter:blur(8px);
+}
+
+.profile-label{
+display:flex;
+justify-content:space-between;
+color:#c7d2cb;
+font-size:9px;
+font-weight:800;
+letter-spacing:1px;
+}
+
+.elevation-profile{
+position:relative;
+height:45px;
+margin-top:7px;
+overflow:hidden;
+}
+
+.elevation-line{
+position:absolute;
+inset:12px 0 0;
+background:
+linear-gradient(
+160deg,
+transparent 0 7%,
+#a9d273 8% 9%,
+transparent 10% 19%,
+#a9d273 20% 21%,
+transparent 22% 34%,
+#a9d273 35% 36%,
+transparent 37% 51%,
+#a9d273 52% 53%,
+transparent 54% 69%,
+#a9d273 70% 71%,
+transparent 72% 82%,
+#a9d273 83% 84%,
+transparent 85%
+);
+}
+
+.elevation-runner{
+position:absolute;
+top:18px;
+left:15%;
+width:7px;
+height:7px;
+border-radius:50%;
+background:#b7f04d;
+box-shadow:0 0 10px #b7f04d;
+}
+
+
+/* =========================
+CONTROLES COURSE
+========================= */
+
+.race-controls{
+position:absolute;
+z-index:6;
+left:0;
+right:0;
+bottom:0;
+padding:16px 18px;
+padding-bottom:calc(18px + env(safe-area-inset-bottom));
+background:linear-gradient(
+180deg,
+rgba(5,12,8,.05),
+rgba(5,12,8,.95) 22%
+);
+}
+
+.race-resource{
+margin-bottom:9px;
+}
+
+.race-resource>div:first-child{
+display:flex;
+justify-content:space-between;
+font-size:10px;
+font-weight:800;
+color:#c6d1ca;
+margin-bottom:4px;
+}
+
+.resource-bar{
+height:7px;
+background:#24372b;
+border-radius:99px;
+overflow:hidden;
+}
+
+.resource-bar div{
+width:100%;
+height:100%;
+background:#b7f04d;
+border-radius:99px;
+transition:width .2s linear;
+}
+
+.pace-control{
+background:rgba(10,25,17,.85);
+border:1px solid #294536;
+border-radius:15px;
+padding:12px;
+margin:12px 0;
+}
+
+.pace-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:#d2ddd5;
+font-size:11px;
+font-weight:900;
+margin-bottom:7px;
+}
+
+.pace-header strong{
+color:#b7f04d;
+}
+
+#paceSlider{
+width:100%;
+accent-color:#b7f04d;
+}
+
+.pace-labels{
+display:flex;
+justify-content:space-between;
+color:#71887a;
+font-size:8px;
+margin-top:3px;
+}
+
+.food-controls{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+}
+
+.race-action{
+border:1px solid #294536;
+background:#0d1c15;
+color:#fff;
+border-radius:13px;
+padding:10px 5px;
+display:grid;
+grid-template-columns:1fr auto;
+align-items:center;
+}
+
+.race-action span{
+font-size:10px;
+font-weight:800;
+}
+
+.race-action:first-letter{
+font-size:18px;
+}
+
+.race-action strong{
+color:#b7f04d;
+font-size:12px;
+}
+
+
+/* =========================
+NAVIGATION
+========================= */
+
+.bottom-nav{
+position:fixed;
+z-index:20;
+bottom:0;
+left:0;
+right:0;
+min-height:72px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+background:rgba(7,17,13,.96);
+border-top:1px solid #1b3025;
+backdrop-filter:blur(12px);
+padding-bottom:env(safe-area-inset-bottom);
+}
+
+.nav-item{
+border:0;
+background:none;
+color:#698174;
+font-size:18px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:3px;
+}
+
+.nav-item span{
+font-size:9px;
+font-weight:800;
+letter-spacing:.5px;
+}
+
+.nav-item.active{
+color:#b7f04d;
+}
+
+
+/* =========================
+RESPONSIVE
+========================= */
 
 @media(min-width:700px){
-.hero{padding-top:36vh}
-.profiles{grid-template-columns:repeat(3,1fr)}
-.profile-card.wide{grid-column:auto}
-.create-button{max-width:500px;margin-left:auto;margin-right:auto}
-.bottom-nav{left:50%;transform:translateX(-50%);max-width:700px;border:1px solid #1b3025;border-bottom:0;border-radius:18px 18px 0 0}
+
+.home-hero{
+padding-top:35vh;
+}
+
+.profiles{
+grid-template-columns:repeat(3,1fr);
+}
+
+.profile-card.wide{
+grid-column:auto;
+}
+
+.create-button{
+max-width:500px;
+margin-left:auto;
+margin-right:auto;
+}
+
+.bottom-nav{
+left:50%;
+transform:translateX(-50%);
+max-width:700px;
+border:1px solid #1b3025;
+border-bottom:0;
+border-radius:18px 18px 0 0;
+}
+
+.runner-showcase{
+min-height:470px;
+}
 }
