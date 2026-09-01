@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#08130f">
+<meta name="theme-color" content="#07110d">
 <title>Trail Manager</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -18,63 +18,40 @@ ACCUEIL
 
 <section id="homeScreen" class="screen active">
 
-<div class="mountains">
-<div class="stars"></div>
-<div class="mountain back"></div>
-<div class="mountain front"></div>
+<div class="realistic-background home-background">
+<div class="background-overlay"></div>
 </div>
 
 <header class="topbar">
-
 <div>
-<small>TRAIL MANAGER</small>
-
-<h1>
-De coureur amateur<br>
-à légende du trail.
-</h1>
+<small>TRAIL MANAGEMENT</small>
+<h1>Trail Manager</h1>
+<p>Construis ta carrière. Dompte la montagne.</p>
 </div>
 
-<div class="logo">
-TM
-</div>
-
+<div class="logo">TM</div>
 </header>
 
-<div class="hero">
+<div class="home-hero">
+
+<div class="hero-copy">
+<span class="eyebrow">TA CARRIÈRE COMMENCE ICI</span>
+
+<h2>
+De ton premier trail<br>
+jusqu'à l'ultra.
+</h2>
 
 <p>
-Construis ta carrière, choisis tes courses
-et deviens une référence du trail.
+Entraîne ton coureur, choisis ton équipement,
+gère tes courses et deviens une référence du trail.
 </p>
+</div>
 
-<button
-id="startButton"
-class="primary-button"
-type="button"
->
-Créer mon runner
-<span>→</span>
+<button id="startButton" class="primary-button">
+<span>Commencer ma carrière</span>
+<strong>→</strong>
 </button>
-
-</div>
-
-<div class="home-stats">
-
-<div>
-<strong>∞</strong>
-<span>Courses</span>
-</div>
-
-<div>
-<strong>5</strong>
-<span>Profils</span>
-</div>
-
-<div>
-<strong>100%</strong>
-<span>Carrière</span>
-</div>
 
 </div>
 
@@ -89,195 +66,130 @@ CREATION DU RUNNER
 
 <header class="topbar simple">
 
-<button
-id="backButton"
-class="icon-button"
-type="button"
->
+<button id="backButton" class="icon-button">
 ←
 </button>
 
 <div>
 <small>NOUVELLE CARRIÈRE</small>
-<h2>Créer ton runner</h2>
+<h2>Ton runner</h2>
 </div>
 
-<div class="logo">
-TM
-</div>
+<div></div>
 
 </header>
-
 
 <div class="page-content">
 
 <div class="runner-preview">
 
 <div class="runner-avatar">
-TM
+🏃
 </div>
 
 <div>
-
-<span class="eyebrow">
-TON RUNNER
-</span>
-
-<h2 id="previewName">
-Ton prénom
-</h2>
-
-<p>
-Prêt à prendre le départ.
-</p>
-
+<span class="eyebrow">TON COUREUR</span>
+<h2 id="previewName">Ton prénom</h2>
+<p>Choisis son profil de départ</p>
 </div>
 
 </div>
 
-
-<label
-class="form-label"
-for="runnerName"
->
-Prénom du coureur
+<label class="form-label" for="runnerName">
+PRÉNOM DU RUNNER
 </label>
 
 <input
 id="runnerName"
 class="text-input"
 type="text"
-maxlength="20"
+maxlength="18"
 placeholder="Ex : Thomas"
 autocomplete="off"
 >
 
-
 <div class="section-title">
-
-<span>
-STYLE DE COURSE
-</span>
-
-<small>
-Choisis ton profil
-</small>
-
+<div>
+<span>STYLE DE COURSE</span>
+<h3>Choisis ton profil</h3>
 </div>
 
+<small>1 choix</small>
+</div>
 
 <div class="profiles">
 
-
 <button
 class="profile-card"
-type="button"
 data-profile="grimpeur"
+type="button"
 >
-
-<b>↗</b>
-
-<strong>
-Grimpeur
-</strong>
-
+<b>⛰️</b>
+<strong>Grimpeur</strong>
 <span>
-À l'aise dans les gros dénivelés
+Très fort dans les montées.
+Moins à l'aise dans les descentes.
 </span>
-
 </button>
-
 
 <button
 class="profile-card"
-type="button"
 data-profile="rouleur"
+type="button"
 >
-
-<b>→</b>
-
-<strong>
-Rouleur
-</strong>
-
+<b>⚡</b>
+<strong>Rouleur</strong>
 <span>
-Rapide et régulier sur les pistes
+Rapide et efficace sur les portions roulantes.
 </span>
-
 </button>
-
 
 <button
 class="profile-card"
-type="button"
 data-profile="descendeur"
+type="button"
 >
-
-<b>↘</b>
-
-<strong>
-Descendeur
-</strong>
-
+<b>🏔️</b>
+<strong>Descendeur</strong>
 <span>
-Explosif dans les descentes
+Excellent dans les descentes techniques.
 </span>
-
 </button>
-
 
 <button
 class="profile-card"
-type="button"
 data-profile="ultra"
+type="button"
 >
-
-<b>∞</b>
-
-<strong>
-Ultra
-</strong>
-
+<b>🔥</b>
+<strong>Ultra</strong>
 <span>
-Endurant sur les longues distances
+Endurant et très bon gestionnaire d'effort.
 </span>
-
 </button>
-
 
 <button
 class="profile-card wide"
-type="button"
 data-profile="polyvalent"
+type="button"
 >
-
-<b>✦</b>
-
-<strong>
-Polyvalent
-</strong>
-
+<b>🎯</b>
+<strong>Polyvalent</strong>
 <span>
-Équilibré sur tous les terrains
+Aucun gros point faible. Un profil équilibré
+pour construire ta carrière.
 </span>
-
 </button>
 
 </div>
-
 
 <button
 id="createRunnerButton"
 class="primary-button create-button"
 type="button"
 >
-
-Commencer ma carrière
-
-<span>
-→
-</span>
-
+Créer mon runner
+<strong>→</strong>
 </button>
 
 </div>
@@ -286,7 +198,200 @@ Commencer ma carrière
 
 
 <!-- =========================
-CARRIERE
+RUNNER
+========================== -->
+
+<section id="runnerScreen" class="screen">
+
+<div class="realistic-background runner-background">
+<div class="background-overlay"></div>
+</div>
+
+<header class="topbar simple">
+
+<div>
+<small>MON RUNNER</small>
+<h2 id="runnerScreenName">Runner</h2>
+</div>
+
+<div class="runner-level-badge">
+LVL <strong id="runnerScreenLevel">1</strong>
+</div>
+
+</header>
+
+<div class="page-content runner-page">
+
+<div class="runner-showcase">
+
+<div class="runner-figure">
+<div class="runner-shadow"></div>
+
+<div class="runner-body">
+
+<div class="runner-head">
+🧢
+</div>
+
+<div class="runner-torso">
+<span>TM</span>
+</div>
+
+<div class="runner-legs">
+<div></div>
+<div></div>
+</div>
+
+<div class="runner-shoes">
+<div>👟</div>
+<div>👟</div>
+</div>
+
+<div class="runner-pack">
+🎒
+</div>
+
+</div>
+</div>
+
+<div class="runner-info">
+
+<span class="eyebrow">ÉQUIPEMENT ACTUEL</span>
+
+<h3 id="runnerProfileName">
+Polyvalent
+</h3>
+
+<p>
+Ton équipement peut améliorer
+tes performances en course.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="section-title">
+<div>
+<span>CARACTÉRISTIQUES</span>
+<h3>Profil du coureur</h3>
+</div>
+</div>
+
+<div class="runner-stats">
+
+<div class="runner-stat">
+<div>
+<strong>Endurance</strong>
+<span id="statEnduranceValue">60</span>
+</div>
+
+<div class="stat-bar">
+<div id="statEnduranceBar"></div>
+</div>
+</div>
+
+<div class="runner-stat">
+<div>
+<strong>Montée</strong>
+<span id="statClimbValue">60</span>
+</div>
+
+<div class="stat-bar">
+<div id="statClimbBar"></div>
+</div>
+</div>
+
+<div class="runner-stat">
+<div>
+<strong>Descente</strong>
+<span id="statDescentValue">60</span>
+</div>
+
+<div class="stat-bar">
+<div id="statDescentBar"></div>
+</div>
+</div>
+
+<div class="runner-stat">
+<div>
+<strong>Vitesse</strong>
+<span id="statSpeedValue">60</span>
+</div>
+
+<div class="stat-bar">
+<div id="statSpeedBar"></div>
+</div>
+</div>
+
+<div class="runner-stat">
+<div>
+<strong>Gestion</strong>
+<span id="statManagementValue">60</span>
+</div>
+
+<div class="stat-bar">
+<div id="statManagementBar"></div>
+</div>
+</div>
+
+<div class="runner-stat">
+<div>
+<strong>Forme</strong>
+<span id="statFitnessValue">60</span>
+</div>
+
+<div class="stat-bar">
+<div id="statFitnessBar"></div>
+</div>
+</div>
+
+</div>
+
+
+<div class="section-title">
+<div>
+<span>ÉQUIPEMENT</span>
+<h3>Ce que tu portes</h3>
+</div>
+</div>
+
+<div class="equipment-grid">
+
+<button class="equipment-slot" type="button">
+<span>👟</span>
+<strong>Chaussures</strong>
+<small id="shoeEquipment">Standard</small>
+</button>
+
+<button class="equipment-slot" type="button">
+<span>🎒</span>
+<strong>Sac</strong>
+<small id="bagEquipment">5 L</small>
+</button>
+
+<button class="equipment-slot" type="button">
+<span>🧥</span>
+<strong>Veste</strong>
+<small id="jacketEquipment">Standard</small>
+</button>
+
+<button class="equipment-slot" type="button">
+<span>🦯</span>
+<strong>Bâtons</strong>
+<small id="poleEquipment">Aucun</small>
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+CARRIÈRE
 ========================== -->
 
 <section id="careerScreen" class="screen">
@@ -294,385 +399,128 @@ CARRIERE
 <header class="topbar">
 
 <div>
-
-<small>
-MA CARRIÈRE
-</small>
-
-<h2 id="careerName">
-Runner
-</h2>
-
-<p id="careerProfile">
-Polyvalent
-</p>
-
+<small>CARRIÈRE</small>
+<h1 id="careerName">Runner</h1>
+<p id="careerProfile">Polyvalent</p>
 </div>
 
-<div class="logo">
-TM
+<div class="runner-level-badge">
+LVL <strong id="careerLevel">1</strong>
 </div>
 
 </header>
 
-
 <div class="page-content">
-
-
-<!-- NIVEAU -->
 
 <div class="career-level">
 
 <div>
-
-<span>
-NIVEAU
-</span>
-
-<strong id="careerLevel">
-1
-</strong>
-
+<span>PROGRESSION</span>
+<strong>Niveau <span id="careerLevelSmall">1</span></strong>
 </div>
-
 
 <div class="xp">
-
 <div id="xpBar"></div>
+</div>
+
+<small id="xpText">0 / 100 XP</small>
 
 </div>
 
-
-<small id="xpText">
-0 / 100 XP
-</small>
-
-</div>
-
-
-<!-- RESSOURCES -->
 
 <div class="stats-grid">
 
 <div>
-
-<span>
-ÉNERGIE
-</span>
-
-<strong id="energyValue">
-100
-</strong>
-
+<span>ÉNERGIE</span>
+<strong id="energyValue">100</strong>
 </div>
-
 
 <div>
-
-<span>
-ARGENT
-</span>
-
-<strong id="moneyValue">
-500 €
-</strong>
-
+<span>ARGENT</span>
+<strong id="moneyValue">500 €</strong>
 </div>
-
 
 <div>
-
-<span>
-COURSES
-</span>
-
-<strong id="racesValue">
-0
-</strong>
-
+<span>COURSES</span>
+<strong id="racesValue">0</strong>
 </div>
-
 
 <div>
-
-<span>
-VICTOIRES
-</span>
-
-<strong id="winsValue">
-0
-</strong>
-
+<span>VICTOIRES</span>
+<strong id="winsValue">0</strong>
 </div>
 
 </div>
 
-
-<!-- CARACTERISTIQUES -->
 
 <div class="section-title">
-
-<span>
-CARACTÉRISTIQUES
-</span>
-
-<small>
-Ton profil de coureur
-</small>
-
-</div>
-
-
-<div class="runner-stats">
-
-
-<div class="runner-stat">
-
 <div>
-
-<strong>
-🫁 Endurance
-</strong>
-
-<span id="statEnduranceValue">
-0
-</span>
-
+<span>PROCHAIN OBJECTIF</span>
+<h3>Première course</h3>
 </div>
-
-<div class="stat-bar">
-<div id="statEnduranceBar"></div>
-</div>
-
-</div>
-
-
-<div class="runner-stat">
-
-<div>
-
-<strong>
-🦵 Montée
-</strong>
-
-<span id="statClimbValue">
-0
-</span>
-
-</div>
-
-<div class="stat-bar">
-<div id="statClimbBar"></div>
-</div>
-
-</div>
-
-
-<div class="runner-stat">
-
-<div>
-
-<strong>
-🏔️ Descente
-</strong>
-
-<span id="statDescentValue">
-0
-</span>
-
-</div>
-
-<div class="stat-bar">
-<div id="statDescentBar"></div>
-</div>
-
-</div>
-
-
-<div class="runner-stat">
-
-<div>
-
-<strong>
-⚡ Vitesse
-</strong>
-
-<span id="statSpeedValue">
-0
-</span>
-
-</div>
-
-<div class="stat-bar">
-<div id="statSpeedBar"></div>
-</div>
-
-</div>
-
-
-<div class="runner-stat">
-
-<div>
-
-<strong>
-🧠 Gestion
-</strong>
-
-<span id="statManagementValue">
-0
-</span>
-
-</div>
-
-<div class="stat-bar">
-<div id="statManagementBar"></div>
-</div>
-
-</div>
-
-
-<div class="runner-stat">
-
-<div>
-
-<strong>
-💪 Forme
-</strong>
-
-<span id="statFitnessValue">
-0
-</span>
-
-</div>
-
-<div class="stat-bar">
-<div id="statFitnessBar"></div>
-</div>
-
-</div>
-
-</div>
-
-
-<!-- PROCHAINE COURSE -->
-
-<div class="section-title">
-
-<span>
-PROCHAINE COURSE
-</span>
-
-<small>
-Ton premier défi
-</small>
-
 </div>
 
 
 <div class="race-card">
 
 <div class="race-top">
-
-<span class="tag">
-DÉBUTANT
-</span>
-
-<span>
-12 km
-</span>
-
+<span>TRAIL LOCAL</span>
+<span class="tag">FACILE</span>
 </div>
 
-
-<h2>
-Premiers sentiers
-</h2>
-
+<h2>Sentier des Pins</h2>
 
 <p>
-Une première course idéale pour découvrir
-la compétition.
+Un premier trail idéal pour découvrir
+la compétition et apprendre à gérer ton effort.
 </p>
 
-
 <div class="race-meta">
-
-<span>
-⛰ 450 m D+
-</span>
-
-<span>
-◷ ~1h30
-</span>
-
+<span>🏃 8 km</span>
+<span>⛰️ +250 m</span>
+<span>🌲 Forêt</span>
 </div>
 
-
-<button
-id="raceButton"
-class="primary-button"
-type="button"
->
-
-Voir la course
-
-<span>
-→
-</span>
-
+<button id="raceButton" class="primary-button" type="button">
+Préparer la course
+<strong>→</strong>
 </button>
 
 </div>
 
 
-<!-- COURSES A VENIR -->
-
 <div class="section-title">
-
-<span>
-À VENIR
-</span>
-
-<small>
-Ta saison
-</small>
-
+<div>
+<span>CALENDRIER</span>
+<h3>Courses à venir</h3>
+</div>
 </div>
 
 
 <div class="upcoming">
 
 <div>
-
-<strong>
-Trail des Crêtes
-</strong>
-
-<span>
-24 km · 900 m D+
-</span>
-
-<b>
-LOCK
-</b>
-
+<strong>Crête du Lac</strong>
+<span>14 km · +650 m</span>
+<b>LOCK</b>
 </div>
 
+<div>
+<strong>Grand Belvédère</strong>
+<span>25 km · +1 400 m</span>
+<b>LOCK</b>
+</div>
 
 <div>
+<strong>Traversée des Arêtes</strong>
+<span>42 km · +2 500 m</span>
+<b>LOCK</b>
+</div>
 
-<strong>
-Montagne Noire
-</strong>
-
-<span>
-38 km · 1 700 m D+
-</span>
-
-<b>
-LOCK
-</b>
-
+<div>
+<strong>Ultra des Géants</strong>
+<span>80 km · +4 800 m</span>
+<b>LOCK</b>
 </div>
 
 </div>
@@ -683,56 +531,250 @@ LOCK
 
 
 <!-- =========================
-COURSE
+BOUTIQUE
+========================== -->
+
+<section id="shopScreen" class="screen">
+
+<header class="topbar">
+
+<div>
+<small>BOUTIQUE</small>
+<h1>Équipement</h1>
+<p>Améliore ton matériel.</p>
+</div>
+
+<div class="money-badge">
+💰 <strong id="shopMoney">500 €</strong>
+</div>
+
+</header>
+
+<div class="page-content">
+
+<div class="shop-tabs">
+
+<button class="shop-tab active" data-category="shoes">
+Chaussures
+</button>
+
+<button class="shop-tab" data-category="bags">
+Sacs
+</button>
+
+<button class="shop-tab" data-category="clothes">
+Vêtements
+</button>
+
+</div>
+
+
+<div class="shop-grid">
+
+<article class="shop-item">
+
+<div class="shop-item-image">
+👟
+</div>
+
+<div class="shop-item-content">
+
+<span class="item-rarity">STANDARD</span>
+
+<h3>Trail Basic</h3>
+
+<p>
+Une chaussure fiable pour commencer.
+</p>
+
+<div class="item-stats">
+<span>+2 Vitesse</span>
+<span>+2 Descente</span>
+</div>
+
+<div class="item-buy">
+
+<strong>150 €</strong>
+
+<button
+class="buy-button"
+type="button"
+data-item="trail-basic"
+data-price="150"
+>
+Acheter
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+<article class="shop-item">
+
+<div class="shop-item-image">
+👟
+</div>
+
+<div class="shop-item-content">
+
+<span class="item-rarity rare">PERFORMANCE</span>
+
+<h3>Mountain Pro</h3>
+
+<p>
+Une chaussure conçue pour les terrains techniques.
+</p>
+
+<div class="item-stats">
+<span>+5 Descente</span>
+<span>+4 Vitesse</span>
+</div>
+
+<div class="item-buy">
+
+<strong>500 €</strong>
+
+<button
+class="buy-button"
+type="button"
+data-item="mountain-pro"
+data-price="500"
+>
+Acheter
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+<article class="shop-item">
+
+<div class="shop-item-image">
+🎒
+</div>
+
+<div class="shop-item-content">
+
+<span class="item-rarity">STANDARD</span>
+
+<h3>Pack Trail 5L</h3>
+
+<p>
+Léger et adapté aux trails courts.
+</p>
+
+<div class="item-stats">
+<span>+3 Gestion</span>
+<span>5 L</span>
+</div>
+
+<div class="item-buy">
+
+<strong>180 €</strong>
+
+<button
+class="buy-button"
+type="button"
+data-item="pack-5l"
+data-price="180"
+>
+Acheter
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+<article class="shop-item">
+
+<div class="shop-item-image">
+🎒
+</div>
+
+<div class="shop-item-content">
+
+<span class="item-rarity rare">ULTRA</span>
+
+<h3>Ultra Pack 12L</h3>
+
+<p>
+Plus de capacité pour les longues distances.
+</p>
+
+<div class="item-stats">
+<span>+8 Gestion</span>
+<span>12 L</span>
+</div>
+
+<div class="item-buy">
+
+<strong>650 €</strong>
+
+<button
+class="buy-button"
+type="button"
+data-item="pack-12l"
+data-price="650"
+>
+Acheter
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+PRÉPARATION COURSE
 ========================== -->
 
 <section id="raceScreen" class="screen">
 
 <header class="topbar simple">
 
-<button
-id="raceBackButton"
-class="icon-button"
-type="button"
->
+<button id="raceBackButton" class="icon-button">
 ←
 </button>
 
 <div>
-
-<small>
-PREMIÈRE COURSE
-</small>
-
-<h2>
-Premiers sentiers
-</h2>
-
+<small>PROCHAINE COURSE</small>
+<h2>Préparation</h2>
 </div>
 
-<div class="logo">
-TM
-</div>
+<div></div>
 
 </header>
 
-
 <div class="page-content">
-
 
 <div class="race-hero">
 
 <span class="tag">
-12 KM · 450 M D+
+TRAIL LOCAL
 </span>
 
-<h1>
-Premiers sentiers
-</h1>
+<h1>Sentier des Pins</h1>
 
 <p>
-Forêt, chemins techniques et une dernière
-montée pour finir.
+8 km dans une forêt vallonnée.
+Une bonne première course pour tester ton niveau.
 </p>
 
 </div>
@@ -741,111 +783,70 @@ montée pour finir.
 <div class="race-stats">
 
 <div>
-
-<span>
-DISTANCE
-</span>
-
-<strong>
-12 km
-</strong>
-
+<span>DISTANCE</span>
+<strong>8 km</strong>
 </div>
-
 
 <div>
-
-<span>
-DÉNIVELÉ
-</span>
-
-<strong>
-450 m
-</strong>
-
+<span>DÉNIVELÉ</span>
+<strong>+250 m</strong>
 </div>
-
 
 <div>
+<span>TERRAIN</span>
+<strong>🌲 Forêt</strong>
+</div>
 
-<span>
-DIFFICULTÉ
-</span>
-
-<strong>
-★☆☆
-</strong>
-
+<div>
+<span>DIFFICULTÉ</span>
+<strong>★☆☆</strong>
 </div>
 
 </div>
 
 
-<!-- STRATEGIE -->
+<div class="section-title">
+<div>
+<span>STRATÉGIE</span>
+<h3>Comment courir ?</h3>
+</div>
+</div>
+
 
 <div class="strategy">
 
-<div class="section-title">
-
-<span>
-STRATÉGIE
-</span>
-
-<small>
-Choisis ton approche
-</small>
-
-</div>
-
-
 <button
 class="strategy-card selected"
-type="button"
 data-strategy="prudent"
+type="button"
 >
-
-<strong>
-Prudent
-</strong>
-
+<strong>🟢 Prudente</strong>
 <span>
-Économise ton énergie · risque faible
+Tu économises ton énergie.
+Idéal pour apprendre le parcours.
 </span>
-
 </button>
-
 
 <button
 class="strategy-card"
-type="button"
 data-strategy="regulier"
+type="button"
 >
-
-<strong>
-Régulier
-</strong>
-
+<strong>🟡 Régulière</strong>
 <span>
-Bon équilibre entre vitesse et fatigue
+Tu maintiens une allure constante.
 </span>
-
 </button>
-
 
 <button
 class="strategy-card"
-type="button"
 data-strategy="attaque"
+type="button"
 >
-
-<strong>
-Attaque
-</strong>
-
+<strong>🔴 Attaque</strong>
 <span>
-Plus rapide · grosse consommation d'énergie
+Tu prends des risques pour viser la performance.
 </span>
-
 </button>
 
 </div>
@@ -856,13 +857,8 @@ id="startRaceButton"
 class="primary-button"
 type="button"
 >
-
 Lancer la course
-
-<span>
-→
-</span>
-
+<strong>▶</strong>
 </button>
 
 
@@ -875,7 +871,162 @@ class="race-result hidden"
 
 </section>
 
-</main>
+
+<!-- =========================
+COURSE ACTIVE
+========================== -->
+
+<section id="activeRaceScreen" class="screen">
+
+<div class="race-environment">
+
+<div class="race-sky"></div>
+
+<div class="race-mountain mountain-one"></div>
+<div class="race-mountain mountain-two"></div>
+
+<div class="race-ground"></div>
+
+<div class="race-track">
+
+<div class="track-line"></div>
+
+<div
+id="raceRunner"
+class="race-runner"
+>
+🏃
+</div>
+
+</div>
+
+</div>
+
+
+<header class="race-hud">
+
+<div>
+<small>SENTIER DES PINS</small>
+<strong>
+<span id="raceDistanceValue">0.0</span>
+/ 8.0 km
+</strong>
+</div>
+
+<div class="race-time">
+<small>TEMPS</small>
+<strong id="raceTimer">05:00</strong>
+</div>
+
+</header>
+
+
+<div class="race-profile">
+
+<div class="profile-label">
+<span>PROFIL</span>
+<strong id="raceGradientValue">+0 m</strong>
+</div>
+
+<div class="elevation-profile">
+<div class="elevation-line"></div>
+<div class="elevation-runner"></div>
+</div>
+
+</div>
+
+
+<div class="race-controls">
+
+<div class="race-resource">
+
+<div>
+<span>⚡ ÉNERGIE</span>
+<strong id="raceEnergy">100%</strong>
+</div>
+
+<div class="resource-bar">
+<div id="raceEnergyBar"></div>
+</div>
+
+</div>
+
+
+<div class="race-resource">
+
+<div>
+<span>💧 HYDRATATION</span>
+<strong id="raceHydration">100%</strong>
+</div>
+
+<div class="resource-bar">
+<div id="raceHydrationBar"></div>
+</div>
+
+</div>
+
+
+<div class="pace-control">
+
+<div class="pace-header">
+<span>ALLURE</span>
+<strong id="paceValue">50%</strong>
+</div>
+
+<input
+id="paceSlider"
+type="range"
+min="0"
+max="100"
+value="50"
+step="1"
+>
+
+<div class="pace-labels">
+<span>RÉCUPÉRATION</span>
+<span>RAPIDE</span>
+</div>
+
+</div>
+
+
+<div class="food-controls">
+
+<button
+id="gelButton"
+class="race-action"
+type="button"
+>
+🍯
+<span>Gel</span>
+<strong id="gelCount">4</strong>
+</button>
+
+<button
+id="drinkButton"
+class="race-action"
+type="button"
+>
+💧
+<span>Boire</span>
+<strong id="drinkCount">3</strong>
+</button>
+
+<button
+id="barButton"
+class="race-action"
+type="button"
+>
+🍫
+<span>Barre</span>
+<strong id="barCount">2</strong>
+</button>
+
+</div>
+
+</div>
+
+</section>
 
 
 <!-- =========================
@@ -886,41 +1037,43 @@ NAVIGATION
 
 <button
 class="nav-item active"
-type="button"
 data-screen="homeScreen"
+type="button"
 >
-⌂
-<span>
-Accueil
-</span>
+🏠
+<span>Accueil</span>
 </button>
-
 
 <button
 class="nav-item"
+data-screen="runnerScreen"
 type="button"
+>
+🧍
+<span>Runner</span>
+</button>
+
+<button
+class="nav-item"
 data-screen="careerScreen"
+type="button"
 >
-♟
-<span>
-Carrière
-</span>
+🏆
+<span>Carrière</span>
 </button>
-
 
 <button
 class="nav-item"
+data-screen="shopScreen"
 type="button"
-data-screen="raceScreen"
 >
-⌁
-<span>
-Course
-</span>
+🏪
+<span>Boutique</span>
 </button>
 
 </nav>
 
+</main>
 
 <script src="js/main.js"></script>
 
