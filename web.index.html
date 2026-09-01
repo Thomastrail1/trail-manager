@@ -1,110 +1,384 @@
 <!DOCTYPE html>
+
 <html lang="fr">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Trail Manager</title>
 
     <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
 
-    <main class="app">
+<main class="app">
+
+    <!-- ================================
+
+         ACCUEIL
+
+         ================================ -->
+
+    <section id="homeScreen">
 
         <header class="topbar">
+
             <div>
+
                 <span class="eyebrow">SAISON 01</span>
+
                 <h1>Trail Manager</h1>
+
             </div>
 
             <div class="profile-icon">
-                🏃
-            </div>
-        </header>
 
+                🏃
+
+            </div>
+
+        </header>
 
         <section class="hero">
 
             <div class="mountain">
+
                 🏔️
+
             </div>
 
             <div class="hero-content">
 
-                <span class="eyebrow">TON AVENTURE COMMENCE</span>
+                <span class="eyebrow">
+
+                    TON AVENTURE COMMENCE
+
+                </span>
 
                 <h2>
+
                     De coureur amateur<br>
+
                     à légende du trail.
+
                 </h2>
 
                 <p>
+
                     Entraîne ton coureur, prépare tes courses
+
                     et construis ta carrière.
+
                 </p>
 
-                <button id="startButton" class="primary-button">
+                <button
+
+                    id="startButton"
+
+                    class="primary-button">
+
                     CRÉER MON COUREUR
+
                 </button>
 
             </div>
 
         </section>
 
-
         <section class="stats-preview">
 
             <div class="stat-card">
+
                 <span>🏃</span>
+
                 <strong>0</strong>
+
                 <small>Courses</small>
+
             </div>
 
             <div class="stat-card">
+
                 <span>🏆</span>
+
                 <strong>0</strong>
+
                 <small>Victoires</small>
+
             </div>
 
             <div class="stat-card">
+
                 <span>⛰️</span>
+
                 <strong>0</strong>
+
                 <small>D+ parcouru</small>
+
             </div>
 
         </section>
 
+    </section>
 
-        <nav class="bottom-nav">
+    <!-- ================================
 
-            <button class="nav-item active">
-                🏠
-                <span>Accueil</span>
+         CRÉATION DU COUREUR
+
+         ================================ -->
+
+    <section
+
+        id="createScreen"
+
+        class="screen hidden">
+
+        <header class="screen-header">
+
+            <button
+
+                id="backButton"
+
+                class="back-button">
+
+                ←
+
             </button>
 
-            <button class="nav-item">
+            <div>
+
+                <span class="eyebrow">
+
+                    NOUVELLE CARRIÈRE
+
+                </span>
+
+                <h2>Ton coureur</h2>
+
+            </div>
+
+        </header>
+
+        <div class="runner-preview">
+
+            <div class="runner-avatar">
+
                 🏃
-                <span>Coureur</span>
-            </button>
 
-            <button class="nav-item">
-                🏔️
-                <span>Courses</span>
-            </button>
+            </div>
 
-            <button class="nav-item">
-                👥
-                <span>Club</span>
-            </button>
+            <div>
 
-        </nav>
+                <span class="eyebrow">
 
-    </main>
+                    FUTUR TRAILEUR
 
+                </span>
 
-    <script src="js/main.js"></script>
+                <h3 id="previewName">
+
+                    Ton coureur
+
+                </h3>
+
+            </div>
+
+        </div>
+
+        <div class="form-section">
+
+            <label for="runnerName">
+
+                Prénom
+
+            </label>
+
+            <input
+
+                id="runnerName"
+
+                type="text"
+
+                maxlength="20"
+
+                placeholder="Ex : Hugo"
+
+            >
+
+        </div>
+
+        <div class="form-section">
+
+            <label>
+
+                Profil
+
+            </label>
+
+            <div class="profile-grid">
+
+                <button
+
+                    class="profile-card"
+
+                    data-profile="grimpeur">
+
+                    <span>🏔️</span>
+
+                    <strong>Grimpeur</strong>
+
+                    <small>
+
+                        Excellent en montée
+
+                    </small>
+
+                </button>
+
+                <button
+
+                    class="profile-card"
+
+                    data-profile="rouleur">
+
+                    <span>⚡</span>
+
+                    <strong>Rouleur</strong>
+
+                    <small>
+
+                        Rapide sur le roulant
+
+                    </small>
+
+                </button>
+
+                <button
+
+                    class="profile-card"
+
+                    data-profile="descendeur">
+
+                    <span>⬇️</span>
+
+                    <strong>Descendeur</strong>
+
+                    <small>
+
+                        Maître des descentes
+
+                    </small>
+
+                </button>
+
+                <button
+
+                    class="profile-card"
+
+                    data-profile="ultra">
+
+                    <span>🔥</span>
+
+                    <strong>Ultra</strong>
+
+                    <small>
+
+                        Endurance exceptionnelle
+
+                    </small>
+
+                </button>
+
+                <button
+
+                    class="profile-card"
+
+                    data-profile="polyvalent">
+
+                    <span>🧩</span>
+
+                    <strong>Polyvalent</strong>
+
+                    <small>
+
+                        Bon partout
+
+                    </small>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <button
+
+            id="createRunnerButton"
+
+            class="primary-button"
+
+            disabled>
+
+            COMMENCER MA CARRIÈRE
+
+        </button>
+
+    </section>
+
+    <!-- ================================
+
+         NAVIGATION
+
+         ================================ -->
+
+    <nav class="bottom-nav">
+
+        <button class="nav-item active">
+
+            🏠
+
+            <span>Accueil</span>
+
+        </button>
+
+        <button class="nav-item">
+
+            🏃
+
+            <span>Coureur</span>
+
+        </button>
+
+        <button class="nav-item">
+
+            🏔️
+
+            <span>Courses</span>
+
+        </button>
+
+        <button class="nav-item">
+
+            👥
+
+            <span>Club</span>
+
+        </button>
+
+    </nav>
+
+</main>
+
+<script src="js/runner.js"></script>
+
+<script src="js/main.js"></script>
 
 </body>
+
 </html>
+
