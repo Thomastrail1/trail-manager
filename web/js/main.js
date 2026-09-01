@@ -3,33 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
 const screens = document.querySelectorAll(".screen");
 const navItems = document.querySelectorAll(".nav-item");
 
-const runnerName = document.getElementById("runnerName");
-const previewName = document.getElementById("previewName");
-const createButton = document.getElementById("createRunnerButton");
-const profileCards = document.querySelectorAll(".profile-card");
-
-const careerName = document.getElementById("careerName");
-const careerProfile = document.getElementById("careerProfile");
-const careerLevel = document.getElementById("careerLevel");
-const xpBar = document.getElementById("xpBar");
-const xpText = document.getElementById("xpText");
-const energyValue = document.getElementById("energyValue");
-const moneyValue = document.getElementById("moneyValue");
-const racesValue = document.getElementById("racesValue");
-const winsValue = document.getElementById("winsValue");
-
-const raceResult = document.getElementById("raceResult");
-
-let selectedProfile = null;
 let runner = null;
+let selectedProfile = null;
 
-try {
-runner = JSON.parse(
-localStorage.getItem("trailManagerRunner")
-);
-} catch (error) {
-runner = null;
-}
+let raceInterval = null;
+let raceState = null;
 
 const names = {
 grimpeur: "Grimpeur",
@@ -86,7 +64,82 @@ fitness: 60
 }
 };
 
-function show(id) {
+const equipment = {
+shoes: {
+standard: {
+name: "Standard",
+speed: 0,
+descent: 0
+},
+"trail-basic": {
+name: "Trail Basic",
+speed: 2,
+descent: 2
+},
+"mountain-pro": {
+name: "Mountain Pro",
+speed: 4,
+descent: 5
+}
+},
+
+bags: {
+standard: {
+name: "5 L",
+management: 0
+},
+"pack-5l": {
+name: "Pack Trail 5L",
+management: 3
+},
+"pack-12l": {
+name: "Ultra Pack 12L",
+management: 8
+}
+},
+
+clothes: {
+standard: {
+name: "Standard",
+fitness: 0
+}
+},
+
+poles: {
+standard: {
+name: "Aucun",
+climb: 0
+}
+}
+};
+
+
+/* =========================
+CHARGEMENT
+========================== */
+
+try {
+runner = JSON.parse(
+localStorage.getItem("trailManagerRunner")
+);
+} catch (error) {
+runner = null;
+}
+
+
+function saveRunner() {
+
+if (!runner) return;
+
+localStorage.setItem(
+"trailManagerRunner",
+JSON.stringify(runner)
+);
+}
+
+
+function showScreen(id) {
+
 screens.forEach(screen => {
 screen.classList.toggle(
 "active",
@@ -104,40 +157,128 @@ item.dataset.screen === id
 window.scrollTo(0, 0);
 }
 
-function renderRunner() {
-if (!runner) return;
 
-careerName.textContent = runner.name;
+/* =========================
+STATS
+========================== */
 
-careerProfile.textContent =
-names[runner.profile] || "Polyvalent";
+function getEquipmentBonus() {
 
-careerLevel.textContent =
-runner.level;
-
-xpBar.style.width =
-Math.min(100, runner.xp) + "%";
-
-xpText.textContent =
-`${runner.xp} / 100 XP`;
-
-energyValue.textContent =
-runner.energy;
-
-moneyValue.textContent =
-`${runner.money} €`;
-
-racesValue.textContent =
-runner.races;
-
-winsValue.textContent =
-runner.victories;
+if (!runner || !runner.equipment) {
+return {
+speed: 0,
+descent: 0,
+management: 0,
+fitness: 0,
+climb: 0
+};
 }
 
-function renderRunnerStats() {
-if (!runner || !runner.stats) return;
+const bonus = {
+speed: 0,
+descent: 0,
+management: 0,
+fitness: 0,
+climb: 0
+};
 
-const stats = runner.stats;
+Object.entries(runner.equipment).forEach(
+([category, itemId]) => {
+
+const categoryItems =
+equipment[category];
+
+if (!categoryItems) return;
+
+const item =
+categoryItems[itemId];
+
+if (!item) return;
+
+Object.keys(bonus).forEach(stat => {
+bonus[stat] += item[stat] || 0;
+});
+}
+);
+
+return bonus;
+}
+
+
+function getEffectiveStats() {
+
+if (!runner) return null;
+
+const bonus = getEquipmentBonus();
+
+return {
+endurance: runner.stats.endurance,
+climb:
+runner.stats.climb + bonus.climb,
+descent:
+runner.stats.descent + bonus.descent,
+speed:
+runner.stats.speed + bonus.speed,
+management:
+runner.stats.management + bonus.management,
+fitness:
+runner.stats.fitness + bonus.fitness
+};
+}
+
+
+/* =========================
+AFFICHAGE RUNNER
+========================== */
+
+function renderRunner() {
+
+if (!runner) return;
+
+const nameElement =
+document.getElementById(
+"runnerScreenName"
+);
+
+const levelElement =
+document.getElementById(
+"runnerScreenLevel"
+);
+
+const profileElement =
+document.getElementById(
+"runnerProfileName"
+);
+
+if (nameElement) {
+nameElement.textContent =
+runner.name;
+}
+
+if (levelElement) {
+levelElement.textContent =
+runner.level;
+}
+
+if (profileElement) {
+profileElement.textContent =
+names[runner.profile] ||
+"Polyvalent";
+}
+
+renderStats();
+renderEquipment();
+renderCareer();
+renderShopMoney();
+}
+
+
+function renderStats() {
+
+if (!runner) return;
+
+const stats =
+getEffectiveStats();
 
 const map = {
 Endurance: stats.endurance,
@@ -162,40 +303,185 @@ document.getElementById(
 );
 
 if (valueElement) {
-valueElement.textContent = value;
+valueElement.textContent =
+Math.round(value);
 }
 
 if (barElement) {
 barElement.style.width =
-value + "%";
+Math.min(100, value) + "%";
 }
 }
 );
 }
 
+
+function renderEquipment() {
+
+if (!runner) return;
+
+const eq =
+runner.equipment || {};
+
+const shoe =
+equipment.shoes[
+eq.shoes || "standard"
+];
+
+const bag =
+equipment.bags[
+eq.bags || "standard"
+];
+
+const clothes =
+equipment.clothes[
+eq.clothes || "standard"
+];
+
+const pole =
+equipment.poles[
+eq.poles || "standard"
+];
+
+const shoeElement =
 document.getElementById(
-"startButton"
-).onclick = () => {
-show("createScreen");
+"shoeEquipment"
+);
+
+const bagElement =
+document.getElementById(
+"bagEquipment"
+);
+
+const jacketElement =
+document.getElementById(
+"jacketEquipment"
+);
+
+const poleElement =
+document.getElementById(
+"poleEquipment"
+);
+
+if (shoeElement) {
+shoeElement.textContent =
+shoe.name;
+}
+
+if (bagElement) {
+bagElement.textContent =
+bag.name;
+}
+
+if (jacketElement) {
+jacketElement.textContent =
+clothes.name;
+}
+
+if (poleElement) {
+poleElement.textContent =
+pole.name;
+}
+}
+
+
+/* =========================
+CARRIÈRE
+========================== */
+
+function renderCareer() {
+
+if (!runner) return;
+
+const elements = {
+careerName: runner.name,
+careerProfile:
+names[runner.profile] ||
+"Polyvalent",
+careerLevel:
+runner.level,
+careerLevelSmall:
+runner.level,
+energyValue:
+runner.energy,
+moneyValue:
+`${runner.money} €`,
+racesValue:
+runner.races,
+winsValue:
+runner.victories
 };
 
-document.getElementById(
-"backButton"
-).onclick = () => {
-show("homeScreen");
-};
+Object.entries(elements).forEach(
+([id, value]) => {
 
-document.getElementById(
-"raceBackButton"
-).onclick = () => {
-show("careerScreen");
-};
+const element =
+document.getElementById(id);
 
+if (element) {
+element.textContent =
+value;
+}
+}
+);
+
+const xpBar =
 document.getElementById(
-"raceButton"
-).onclick = () => {
-show("raceScreen");
-};
+"xpBar"
+);
+
+const xpText =
+document.getElementById(
+"xpText"
+);
+
+if (xpBar) {
+xpBar.style.width =
+Math.min(
+100,
+runner.xp
+) + "%";
+}
+
+if (xpText) {
+xpText.textContent =
+`${runner.xp} / 100 XP`;
+}
+}
+
+
+function renderShopMoney() {
+
+const moneyElement =
+document.getElementById(
+"shopMoney"
+);
+
+if (
+moneyElement &&
+runner
+) {
+moneyElement.textContent =
+`${runner.money} €`;
+}
+}
+
+
+/* =========================
+CREATION
+========================== */
+
+const runnerName =
+document.getElementById(
+"runnerName"
+);
+
+const previewName =
+document.getElementById(
+"previewName"
+);
+
+if (runnerName) {
 
 runnerName.oninput = () => {
 
@@ -203,21 +489,41 @@ previewName.textContent =
 runnerName.value.trim() ||
 "Ton prénom";
 };
+}
 
-profileCards.forEach(card => {
+
+document
+.querySelectorAll(".profile-card")
+.forEach(card => {
 
 card.onclick = () => {
 
-profileCards.forEach(c => {
-c.classList.remove("selected");
+document
+.querySelectorAll(
+".profile-card"
+)
+.forEach(c => {
+c.classList.remove(
+"selected"
+);
 });
 
-card.classList.add("selected");
+card.classList.add(
+"selected"
+);
 
 selectedProfile =
 card.dataset.profile;
 };
 });
+
+
+const createButton =
+document.getElementById(
+"createRunnerButton"
+);
+
+if (createButton) {
 
 createButton.onclick = () => {
 
@@ -228,23 +534,24 @@ if (name.length < 2) {
 
 runnerName.focus();
 
-runnerName.style.borderColor =
-"#b7f04d";
-
 return;
 }
 
 if (!selectedProfile) {
 
-profileCards[0].focus();
+alert(
+"Choisis ton profil de coureur."
+);
 
 return;
 }
 
 runner = {
-name: name,
 
-profile: selectedProfile,
+name,
+
+profile:
+selectedProfile,
 
 level: 1,
 
@@ -258,132 +565,92 @@ money: 500,
 
 energy: 100,
 
+equipment: {
+shoes: "standard",
+bags: "standard",
+clothes: "standard",
+poles: "standard"
+},
+
+inventory: [],
+
 stats: {
-...profileStats[selectedProfile]
+...profileStats[
+selectedProfile
+]
 }
 };
 
-localStorage.setItem(
-"trailManagerRunner",
-JSON.stringify(runner)
-);
+saveRunner();
 
 renderRunner();
 
-renderRunnerStats();
-
-show("careerScreen");
+showScreen(
+"careerScreen"
+);
 };
+}
 
-document.querySelectorAll(
-".strategy-card"
-).forEach(card => {
 
-card.onclick = () => {
+/* =========================
+NAVIGATION PRINCIPALE
+========================== */
 
-document.querySelectorAll(
-".strategy-card"
-).forEach(c => {
-c.classList.remove("selected");
-});
-
-card.classList.add("selected");
-};
-});
-
+const startButton =
 document.getElementById(
-"startRaceButton"
-).onclick = () => {
-
-if (!runner) return;
-
-const selectedStrategy =
-document.querySelector(
-".strategy-card.selected"
+"startButton"
 );
 
-const strategy =
-selectedStrategy?.dataset.strategy ||
-"prudent";
-
-const costs = {
-prudent: 20,
-regulier: 30,
-attaque: 45
-};
-
-const xpGain = {
-prudent: 25,
-regulier: 35,
-attaque: 45
-};
-
-runner.energy = Math.max(
-0,
-runner.energy -
-costs[strategy]
+if (startButton) {
+startButton.onclick = () => {
+showScreen(
+"createScreen"
 );
-
-runner.xp +=
-xpGain[strategy];
-
-runner.races += 1;
-
-let levelUp = "";
-
-if (runner.xp >= 100) {
-
-runner.xp -= 100;
-
-runner.level += 1;
-
-runner.money += 150;
-
-levelUp =
-`<br><br>
-<strong>Niveau supérieur !</strong>
-<br>
-Tu passes niveau ${runner.level}.
-`;
+};
 }
 
-let result = "";
 
-if (strategy === "attaque") {
-
-result =
-"Tu as pris des risques et signé une belle performance.";
-
-} else if (strategy === "regulier") {
-
-result =
-"Course solide et régulière. Tu progresses sans te mettre dans le rouge.";
-
-} else {
-
-result =
-"Course maîtrisée. Tu termines avec encore des réserves.";
-}
-
-localStorage.setItem(
-"trailManagerRunner",
-JSON.stringify(runner)
+const backButton =
+document.getElementById(
+"backButton"
 );
 
-renderRunner();
-
-renderRunnerStats();
-
-raceResult.innerHTML =
-`<strong>🏁 Course terminée</strong>
-<br><br>
-${result}
-${levelUp}`;
-
-raceResult.classList.remove(
-"hidden"
+if (backButton) {
+backButton.onclick = () => {
+showScreen(
+"homeScreen"
 );
 };
+}
+
+
+const raceButton =
+document.getElementById(
+"raceButton"
+);
+
+if (raceButton) {
+raceButton.onclick = () => {
+showScreen(
+"raceScreen"
+);
+};
+}
+
+
+const raceBackButton =
+document.getElementById(
+"raceBackButton"
+);
+
+if (raceBackButton) {
+raceBackButton.onclick = () => {
+showScreen(
+"careerScreen"
+);
+};
+}
+
 
 navItems.forEach(item => {
 
@@ -393,16 +660,965 @@ const target =
 item.dataset.screen;
 
 if (
-target === "careerScreen" &&
+target !== "homeScreen" &&
 !runner
 ) {
-show("createScreen");
+
+showScreen(
+"createScreen"
+);
+
 return;
 }
 
-show(target);
+showScreen(target);
+
+if (
+target === "runnerScreen"
+) {
+renderRunner();
+}
+
+if (
+target === "careerScreen"
+) {
+renderCareer();
+}
+
+if (
+target === "shopScreen"
+) {
+renderShopMoney();
+}
 };
 });
+
+
+/* =========================
+BOUTIQUE
+========================== */
+
+document
+.querySelectorAll(".buy-button")
+.forEach(button => {
+
+button.onclick = () => {
+
+if (!runner) return;
+
+const itemId =
+button.dataset.item;
+
+const price =
+Number(
+button.dataset.price
+);
+
+if (
+runner.money <
+price
+) {
+
+alert(
+"Tu n'as pas assez d'argent."
+);
+
+return;
+}
+
+runner.money -= price;
+
+if (
+!runner.inventory
+) {
+runner.inventory = [];
+}
+
+if (
+!runner.inventory.includes(
+itemId
+)
+) {
+
+runner.inventory.push(
+itemId
+);
+}
+
+if (
+itemId ===
+"trail-basic" ||
+itemId ===
+"mountain-pro"
+) {
+
+runner.equipment.shoes =
+itemId;
+}
+
+if (
+itemId ===
+"pack-5l" ||
+itemId ===
+"pack-12l"
+) {
+
+runner.equipment.bags =
+itemId;
+}
+
+saveRunner();
+
+renderRunner();
+
+alert(
+"Équipement acheté et équipé !"
+);
+};
+});
+
+
+/* =========================
+STRATÉGIE AVANT COURSE
+========================== */
+
+document
+.querySelectorAll(".strategy-card")
+.forEach(card => {
+
+card.onclick = () => {
+
+document
+.querySelectorAll(
+".strategy-card"
+)
+.forEach(c => {
+c.classList.remove(
+"selected"
+);
+});
+
+card.classList.add(
+"selected"
+);
+};
+});
+
+
+const startRaceButton =
+document.getElementById(
+"startRaceButton"
+);
+
+if (startRaceButton) {
+
+startRaceButton.onclick = () => {
+
+if (!runner) return;
+
+if (
+runner.energy <= 5
+) {
+
+alert(
+"Ton coureur est trop fatigué. Repose-toi avant de courir."
+);
+
+return;
+}
+
+const strategy =
+document
+.querySelector(
+".strategy-card.selected"
+)
+?.dataset.strategy ||
+"prudent";
+
+startActiveRace(
+strategy
+);
+};
+}
+
+
+/* =========================
+LANCEMENT COURSE
+========================== */
+
+function startActiveRace(
+strategy
+) {
+
+if (raceInterval) {
+clearInterval(
+raceInterval
+);
+}
+
+raceState = {
+
+elapsed: 0,
+
+duration: 300,
+
+distance: 0,
+
+totalDistance: 8,
+
+energy: 100,
+
+hydration: 100,
+
+pace: 50,
+
+gradient: 0,
+
+gels: 4,
+
+drinks: 3,
+
+bars: 2,
+
+strategy
+
+};
+
+const slider =
+document.getElementById(
+"paceSlider"
+);
+
+if (slider) {
+slider.value = 50;
+}
+
+updateRaceUI();
+
+showScreen(
+"activeRaceScreen"
+);
+
+raceInterval =
+setInterval(
+raceTick,
+1000
+);
+}
+
+
+/* =========================
+MOTEUR COURSE
+========================== */
+
+function getCurrentGradient(
+progress
+) {
+
+const points = [
+0,
+5,
+15,
+25,
+38,
+50,
+62,
+73,
+85,
+100
+];
+
+const values = [
+1,
+5,
+10,
+-4,
+3,
+8,
+-9,
+5,
+-3,
+0
+];
+
+for (
+let i = 0;
+i < points.length - 1;
+i++
+) {
+
+if (
+progress >= points[i] &&
+progress <= points[i + 1]
+) {
+
+const ratio =
+(
+progress -
+points[i]
+) /
+(
+points[i + 1] -
+points[i]
+);
+
+return (
+values[i] +
+(
+values[i + 1] -
+values[i]
+) *
+ratio
+);
+}
+}
+
+return 0;
+}
+
+
+function raceTick() {
+
+if (!raceState) return;
+
+raceState.elapsed += 1;
+
+const stats =
+getEffectiveStats();
+
+const progress =
+(
+raceState.distance /
+raceState.totalDistance
+) * 100;
+
+raceState.gradient =
+getCurrentGradient(
+progress
+);
+
+const pace =
+raceState.pace;
+
+let baseSpeed =
+0.015 +
+(
+pace / 100
+) * 0.035;
+
+baseSpeed *=
+0.75 +
+(
+stats.speed /
+100
+) * 0.5;
+
+if (
+raceState.gradient > 0
+) {
+
+const climbFactor =
+stats.climb / 100;
+
+baseSpeed *=
+1 -
+(
+raceState.gradient *
+0.018 *
+(1.25 - climbFactor)
+);
+}
+
+if (
+raceState.gradient < 0
+) {
+
+const descentFactor =
+stats.descent / 100;
+
+baseSpeed *=
+1 +
+(
+Math.abs(
+raceState.gradient
+) *
+0.012 *
+descentFactor
+);
+}
+
+baseSpeed =
+Math.max(
+0.004,
+baseSpeed
+);
+
+const energyCost =
+(
+0.08 +
+(
+pace / 100
+) * 0.20
+) *
+(
+1.15 -
+stats.endurance /
+500
+) *
+(
+1.10 -
+stats.management /
+1000
+);
+
+raceState.energy =
+Math.max(
+0,
+raceState.energy -
+energyCost
+);
+
+raceState.hydration =
+Math.max(
+0,
+raceState.hydration -
+(
+0.10 +
+pace * 0.001
+)
+);
+
+if (
+raceState.energy < 20
+) {
+baseSpeed *=
+0.65;
+}
+
+if (
+raceState.hydration < 20
+) {
+baseSpeed *=
+0.72;
+}
+
+raceState.distance +=
+baseSpeed;
+
+if (
+raceState.distance >=
+raceState.totalDistance ||
+raceState.elapsed >=
+raceState.duration
+) {
+
+raceState.distance =
+raceState.totalDistance;
+
+updateRaceUI();
+
+finishRace();
+
+return;
+}
+
+updateRaceUI();
+}
+
+
+/* =========================
+AFFICHAGE COURSE
+========================== */
+
+function updateRaceUI() {
+
+if (!raceState) return;
+
+const distanceElement =
+document.getElementById(
+"raceDistanceValue"
+);
+
+const timerElement =
+document.getElementById(
+"raceTimer"
+);
+
+const energyElement =
+document.getElementById(
+"raceEnergy"
+);
+
+const hydrationElement =
+document.getElementById(
+"raceHydration"
+);
+
+const energyBar =
+document.getElementById(
+"raceEnergyBar"
+);
+
+const hydrationBar =
+document.getElementById(
+"raceHydrationBar"
+);
+
+const paceElement =
+document.getElementById(
+"paceValue"
+);
+
+const gradientElement =
+document.getElementById(
+"raceGradientValue"
+);
+
+if (distanceElement) {
+
+distanceElement.textContent =
+raceState.distance
+.toFixed(1);
+}
+
+if (timerElement) {
+
+const remaining =
+Math.max(
+0,
+raceState.duration -
+raceState.elapsed
+);
+
+const minutes =
+Math.floor(
+remaining / 60
+);
+
+const seconds =
+remaining % 60;
+
+timerElement.textContent =
+`${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+}
+
+if (energyElement) {
+
+energyElement.textContent =
+`${Math.round(raceState.energy)}%`;
+}
+
+if (hydrationElement) {
+
+hydrationElement.textContent =
+`${Math.round(raceState.hydration)}%`;
+}
+
+if (energyBar) {
+
+energyBar.style.width =
+`${raceState.energy}%`;
+}
+
+if (hydrationBar) {
+
+hydrationBar.style.width =
+`${raceState.hydration}%`;
+}
+
+if (paceElement) {
+
+paceElement.textContent =
+`${Math.round(raceState.pace)}%`;
+}
+
+if (gradientElement) {
+
+const value =
+Math.round(
+raceState.gradient *
+10
+) / 10;
+
+gradientElement.textContent =
+value >= 0
+? `+${value}%`
+: `${value}%`;
+}
+
+const runnerElement =
+document.getElementById(
+"raceRunner"
+);
+
+const elevationRunner =
+document.querySelector(
+".elevation-runner"
+);
+
+const progress =
+(
+raceState.distance /
+raceState.totalDistance
+) * 100;
+
+if (runnerElement) {
+
+runnerElement.style.left =
+`${Math.max(
+3,
+Math.min(
+92,
+progress
+)
+)}%`;
+}
+
+if (elevationRunner) {
+
+elevationRunner.style.left =
+`${Math.max(
+0,
+Math.min(
+96,
+progress
+)
+)}%`;
+}
+
+const gelCount =
+document.getElementById(
+"gelCount"
+);
+
+const drinkCount =
+document.getElementById(
+"drinkCount"
+);
+
+const barCount =
+document.getElementById(
+"barCount"
+);
+
+if (gelCount) {
+gelCount.textContent =
+raceState.gels;
+}
+
+if (drinkCount) {
+drinkCount.textContent =
+raceState.drinks;
+}
+
+if (barCount) {
+barCount.textContent =
+raceState.bars;
+}
+}
+
+
+/* =========================
+CONTRÔLE ALLURE
+========================== */
+
+const paceSlider =
+document.getElementById(
+"paceSlider"
+);
+
+if (paceSlider) {
+
+paceSlider.addEventListener(
+"input",
+() => {
+
+if (!raceState) return;
+
+raceState.pace =
+Number(
+paceSlider.value
+);
+
+updateRaceUI();
+}
+);
+}
+
+
+/* =========================
+ALIMENTATION
+========================== */
+
+const gelButton =
+document.getElementById(
+"gelButton"
+);
+
+if (gelButton) {
+
+gelButton.onclick = () => {
+
+if (
+!raceState ||
+raceState.gels <= 0
+) return;
+
+raceState.gels -= 1;
+
+raceState.energy =
+Math.min(
+100,
+raceState.energy +
+18
+);
+
+updateRaceUI();
+};
+}
+
+
+const drinkButton =
+document.getElementById(
+"drinkButton"
+);
+
+if (drinkButton) {
+
+drinkButton.onclick = () => {
+
+if (
+!raceState ||
+raceState.drinks <= 0
+) return;
+
+raceState.drinks -= 1;
+
+raceState.hydration =
+Math.min(
+100,
+raceState.hydration +
+25
+);
+
+updateRaceUI();
+};
+}
+
+
+const barButton =
+document.getElementById(
+"barButton"
+);
+
+if (barButton) {
+
+barButton.onclick = () => {
+
+if (
+!raceState ||
+raceState.bars <= 0
+) return;
+
+raceState.bars -= 1;
+
+raceState.energy =
+Math.min(
+100,
+raceState.energy +
+28
+);
+
+updateRaceUI();
+};
+}
+
+
+/* =========================
+FIN DE COURSE
+========================== */
+
+function finishRace() {
+
+if (raceInterval) {
+
+clearInterval(
+raceInterval
+);
+
+raceInterval = null;
+}
+
+const stats =
+getEffectiveStats();
+
+const pace =
+raceState.pace;
+
+let performance =
+(
+stats.endurance * 0.25 +
+stats.climb * 0.15 +
+stats.descent * 0.15 +
+stats.speed * 0.20 +
+stats.management * 0.15 +
+stats.fitness * 0.10
+);
+
+performance +=
+(
+raceState.energy -
+50
+) * 0.25;
+
+performance +=
+(
+raceState.hydration -
+50
+) * 0.10;
+
+performance -=
+Math.abs(
+pace - 60
+) * 0.05;
+
+const position =
+performance >= 75
+? 1
+: performance >= 68
+? 3
+: performance >= 60
+? 8
+: performance >= 52
+? 15
+: 25;
+
+const won =
+position === 1;
+
+const xp =
+won
+? 70
+: position <= 3
+? 55
+: position <= 8
+? 45
+: 30;
+
+const reward =
+won
+? 350
+: position <= 3
+? 250
+: position <= 8
+? 180
+: 120;
+
+runner.races += 1;
+
+if (won) {
+runner.victories += 1;
+}
+
+runner.xp += xp;
+
+runner.money += reward;
+
+runner.energy =
+Math.max(
+0,
+Math.round(
+runner.energy -
+(
+25 +
+pace * 0.15
+)
+)
+);
+
+let levelUp = false;
+
+while (
+runner.xp >= 100
+) {
+
+runner.xp -= 100;
+
+runner.level += 1;
+
+levelUp = true;
+}
+
+saveRunner();
+
+const result =
+document.getElementById(
+"raceResult"
+);
+
+if (result) {
+
+result.innerHTML =
+`
+<strong>🏁 Course terminée</strong>
+<br><br>
+
+<strong>
+${won
+? "🥇 VICTOIRE !"
+: `Classement : ${position}e`}
+</strong>
+
+<br><br>
+
+Distance :
+8 km
+
+<br>
+
+Énergie restante :
+${Math.round(
+raceState.energy
+)}%
+
+<br>
+
+XP gagnée :
++${xp}
+
+<br>
+
+Récompense :
++${reward} €
+
+${
+levelUp
+? `
+<br><br>
+<strong>
+🎉 Niveau ${runner.level} !
+</strong>
+`
+: ""
+}
+`;
+
+result.classList.remove(
+"hidden"
+);
+}
+
+renderRunner();
+
+showScreen(
+"raceScreen"
+);
+}
+
+
+/* =========================
+INITIALISATION
+========================== */
 
 if (runner) {
 
@@ -411,18 +1627,28 @@ if (!runner.stats) {
 runner.stats = {
 ...profileStats[
 runner.profile
-] || profileStats.polyvalent
+] ||
+profileStats.polyvalent
 };
-
-localStorage.setItem(
-"trailManagerRunner",
-JSON.stringify(runner)
-);
 }
 
-renderRunner();
+if (!runner.equipment) {
 
-renderRunnerStats();
+runner.equipment = {
+shoes: "standard",
+bags: "standard",
+clothes: "standard",
+poles: "standard"
+};
+}
+
+if (!runner.inventory) {
+runner.inventory = [];
+}
+
+saveRunner();
+
+renderRunner();
 }
 
 });
